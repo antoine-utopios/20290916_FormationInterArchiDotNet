@@ -1,0 +1,6 @@
+@Project2.KennelAPI_HostAddress = http://localhost:5005
+
+GET {{Project2.KennelAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
