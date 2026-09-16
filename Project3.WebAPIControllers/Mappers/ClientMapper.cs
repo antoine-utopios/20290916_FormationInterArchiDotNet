@@ -9,15 +9,13 @@ public class ClientMapper
         return new ClientWithFullNameResponse(client.Id, $"{client.Firstname} {client.Lastname}");
     }
 
-    public Client FromClientWithFullNameResponse(ClientWithFullNameResponse dto)
+    public Client FromClientCreationRequest(ClientCreationRequest dto)
     {
-        var fullNameSplit = dto.FullName.Split(" ");
-
         return new Client()
         {
-            Id = dto.ClientId,
-            Firstname = fullNameSplit[0],
-            Lastname = fullNameSplit[1]
+            Firstname = dto.Firstname,
+            Lastname = dto.Lastname,
+            Email = dto.Email
         };
     }
 

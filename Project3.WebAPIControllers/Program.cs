@@ -1,6 +1,10 @@
+using Project3.WebAPIControllers.Mappers;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddScoped<ClientMapper>();
+builder.Services.AddSingleton<FakeDB>();
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

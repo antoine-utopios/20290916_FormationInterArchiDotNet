@@ -8,27 +8,23 @@ namespace Project3.WebAPIControllers.Controllers;
 [Route("api/v1/[controller]")]
 public class ClientController : ControllerBase
 {
-    private List<Client> clientLists;
-    private int clientCounter;
+
 
     private ClientMapper clientMapper;
+    private FakeDB context;
 
-    public ClientController(ClientMapper clientMapper)
+    public ClientController(ClientMapper clientMapper, FakeDB context)
     {
         this.clientMapper = clientMapper;
+        this.context = context;
 
-        clientLists = new()
-        {
-          new Client() { Id = ++clientCounter, Firstname = "John", Lastname = "DUPONT", Email = "j.dupont@example.com"},
-          new Client() { Id = ++clientCounter, Firstname = "Martha", Lastname = "DOE", Email = "m.doe@example.com"},
-          new Client() { Id = ++clientCounter, Firstname = "Clark", Lastname = "SMITH", Email = "c.smith@example.com"}
-        };
+
     }
 
     [HttpGet(Name = "GetAllClients")]
     public ActionResult<List<Client>> GetAllClients()
     {
-        var clientListVersionDTOs = clientLists
+        var clientListVersionDTOs = context.GetAll()
         .Select(clientMapper.ToClientWithFullNameResponse)
         .ToList();
 
@@ -38,11 +34,21 @@ public class ClientController : ControllerBase
     [HttpGet("{clientId:int}", Name = "GetClientById")]
     public ActionResult<Client?> GetClientById(int clientId)
     {
-        var clientFound = clientLists.FirstOrDefault(x => x.Id == clientId);
+        var clientFound = context.GetById(clientId);
 
         if (clientFound is null) return NotFound();
         else {
             return Ok(clientMapper.ToClientWithFullNameResponse(clientFound));
         }
+    }
+
+    [HttpPost(Name = "SaveNewClient")]
+    public ActionResult<Client?> SaveNewClient(ClientCreationRequest requestDto)
+    {
+        var clientToCreate = clientMapper.FromClientCreationRequest(requestDto);
+
+        var clientCreated = context.Save(clientToCreate);
+
+        return Created($"/api/v1/client/{clientCreated.Id}", clientCreated);
     }
 }
