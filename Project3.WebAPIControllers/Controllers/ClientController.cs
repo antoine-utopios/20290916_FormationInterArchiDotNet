@@ -23,7 +23,11 @@ public class ClientController : ControllerBase
     [HttpGet(Name = "GetAllClients")]
     public ActionResult<List<Client>> GetAllClients()
     {
-        return Ok(clientLists);
+        var clientListVersionDTOs = clientLists
+        .Select(clientEnCoursIteration => new ClientWithFullNameResponse(clientEnCoursIteration.Id, $"{clientEnCoursIteration.Firstname} {clientEnCoursIteration.Lastname}"))
+        .ToList();
+
+        return Ok(clientListVersionDTOs);
     }
 
     [HttpGet("{clientId:int}", Name = "GetClientById")]
@@ -32,6 +36,10 @@ public class ClientController : ControllerBase
         var clientFound = clientLists.FirstOrDefault(x => x.Id == clientId);
 
         if (clientFound is null) return NotFound();
-        else return Ok(clientFound);
+        else {
+            var clientFoundVersionDTO = new ClientWithFullNameResponse(clientFound.Id, $"{clientFound.Firstname} {clientFound.Lastname}");
+            
+            return Ok(clientFoundVersionDTO);
+        }
     }
 }
