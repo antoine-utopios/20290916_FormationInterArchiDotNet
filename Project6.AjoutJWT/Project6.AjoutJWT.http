@@ -1,0 +1,6 @@
+@Project6.AjoutJWT_HostAddress = http://localhost:5109
+
+GET {{Project6.AjoutJWT_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
