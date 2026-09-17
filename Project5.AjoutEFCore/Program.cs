@@ -6,8 +6,6 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Configuration.GetValue()
-
 // Add services to the container.
 if (Environment.GetEnvironmentVariable("PROFILE") == "PROD")
 {
