@@ -1,7 +1,61 @@
 ﻿@page "/"
+@using Project10.DemoBlazor.Models;
+@rendermode InteractiveServer
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<h1>Hello Seb!</h1>
+
+<hr>
+
+<NavLink href="/weather">Weather</NavLink>
+
+<hr>
+
+<EditForm Model="registerModel" OnValidSubmit="AfficherContenuForm">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <InputText @bind-Value="registerModel.Email" />
+    <InputText @bind-Value="registerModel.Password" />
+
+    <button type="submit">Envoyer</button>
+</EditForm>
+
+<button @onclick="SayHello">@message</button>
+
+<input type="text" @bind="message" @bind:event="oninput">
 
 Welcome to your new app.
+
+<hr>
+
+@foreach (var movie in movies)
+{
+    <CustomCard Movie="movie" OnDeleteByTitle="DeleteMovieFromListByTitle"/>
+}
+
+@code {
+    string message="Toto";
+    private RegisterModel registerModel = new();
+    List<MovieViewModel> movies = new() {
+        new MovieViewModel() { Title="Avatar", Synopsis= "Un homme bleu protège sa maison des envahisseurs" },
+        new MovieViewModel() { Title="Titanic", Synopsis= "Un homme teste la température de la piscine géante" }
+    };
+    public void SayHello()
+    {
+        Console.WriteLine($"message: {message}");
+    }
+
+    public void AfficherContenuForm()
+    {
+        Console.WriteLine($"Email: {registerModel.Email}, Password: {registerModel.Password}");
+    }
+
+    public void DeleteMovieFromListByTitle(string title)
+    {
+        var toDelete = movies.FirstOrDefault(x => x.Title == title);
+        if (toDelete is not null) movies.Remove(toDelete);
+        Console.WriteLine(movies.Count);
+    }
+}

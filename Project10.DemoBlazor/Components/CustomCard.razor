@@ -1,0 +1,27 @@
+@using Project10.DemoBlazor.Models;
+
+@if(Movie is not null)
+{
+    <div>
+        <h3>@Movie.Title</h3>
+        <hr>
+        <p>@Movie.Synopsis</p>
+        <hr>
+        <button @onclick="DeleteMovieByTitle">Supprimer le film</button>
+    </div>
+} else
+{
+    <div>
+        Loading...
+    </div>
+}
+
+@code {
+    [Parameter] public MovieViewModel? Movie { get; set; } = null;
+    [Parameter] public EventCallback<string> OnDeleteByTitle { get; set; }
+
+    public async Task DeleteMovieByTitle()
+    {
+        if (Movie is not null) await OnDeleteByTitle.InvokeAsync(Movie.Title);
+    }
+}
