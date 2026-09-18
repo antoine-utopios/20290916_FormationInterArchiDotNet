@@ -1,0 +1,43 @@
+[
+    {
+    "PostId": "sdqdqd-dqsdq-qdqdq",
+    "Text": "Je suis le contenu du poste",
+    "Author": "JDoe",
+    "Comments": {
+        "dqsdqdq5dq6d54qd",
+        "dqsdqdq5dq6d54qd",
+        "dqsdqdq5dq6d54qd",
+        "dqsdqdq5dq6d54qd",
+    }
+},
+{
+    "PostId": "sdqdqd-dqsdq-qdqdq",
+    "Text": "Je suis le contenu du poste",
+    "Comments": [
+            {
+                "Author": "Martha",
+                "CreatedDate": "2026-09-18",
+                "Content": "Je suis le commentaire"
+            },
+        ]
+},
+{
+    "PostId": "sdqdqd-dqsdq-qdqdq",
+    "Text": "Je suis le contenu du poste",
+    "Author": "JDoe",
+    "Comments": [
+            {
+                "Author": "Martha",
+                "CreatedDate": "2026-09-18",
+                "Content": "Je suis le commentaire"
+            },
+            {
+                "Author": "Martha",
+                "CreatedDate": "2026-09-18",
+                "Content": "Je suis le commentaire"
+            },
+        ]
+    },
+]
+
+
