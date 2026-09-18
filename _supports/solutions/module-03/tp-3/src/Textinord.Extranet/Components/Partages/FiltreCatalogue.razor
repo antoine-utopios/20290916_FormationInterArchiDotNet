@@ -1,0 +1,42 @@
+<EditForm Model="filtre" OnValidSubmit="Soumettre" FormName="filtre-catalogue" class="filtre-catalogue mb-3">
+    <DataAnnotationsValidator />
+    <div class="row g-2 align-items-end">
+        <div class="col-md-5">
+            <label for="texte" class="form-label">Recherche</label>
+            <InputText id="texte" class="form-control" @bind-Value="filtre.Texte" placeholder="Référence ou libellé" />
+            <ValidationMessage For="() => filtre.Texte" />
+        </div>
+        <div class="col-md-4">
+            <label for="famille" class="form-label">Famille</label>
+            <InputSelect id="famille" class="form-select" @bind-Value="filtre.Famille">
+                <option value="">Toutes les familles</option>
+                @foreach (var famille in Familles)
+                {
+                    <option value="@famille">@famille</option>
+                }
+            </InputSelect>
+        </div>
+        <div class="col-md-2">
+            <div class="form-check">
+                <InputCheckbox id="stock" class="form-check-input" @bind-Value="filtre.EnStockSeulement" />
+                <label for="stock" class="form-check-label">En stock</label>
+            </div>
+        </div>
+        <div class="col-md-1 d-grid">
+            <button type="submit" class="btn btn-primary">Filtrer</button>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    private readonly FiltreArticles filtre = new();
+
+    [Parameter]
+    public IReadOnlyList<string> Familles { get; set; } = [];
+
+    /// <summary>Émis avec une copie du filtre : le parent ne partage pas l'état du formulaire.</summary>
+    [Parameter]
+    public EventCallback<FiltreArticles> OnRechercher { get; set; }
+
+    private Task Soumettre() => OnRechercher.InvokeAsync(filtre.Copier());
+}

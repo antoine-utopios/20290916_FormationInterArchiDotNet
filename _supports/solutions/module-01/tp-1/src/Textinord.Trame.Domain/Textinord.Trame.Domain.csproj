@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>14</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <RootNamespace>Textinord.Trame.Domain</RootNamespace>
+    <AssemblyName>Textinord.Trame.Domain</AssemblyName>
+    <Description>Noyau métier de Trame 2 : aucune dépendance technique (ni EF Core, ni ASP.NET Core, ni SQL).</Description>
+  </PropertyGroup>
+
+</Project>

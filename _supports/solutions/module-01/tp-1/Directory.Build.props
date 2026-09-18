@@ -1,0 +1,17 @@
+<Project>
+
+  <!-- Réglages communs aux projets de Trame 2 : version du langage, nullable, analyse statique. -->
+  <PropertyGroup>
+    <LangVersion>14</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>latest-recommended</AnalysisLevel>
+    <Company>Textinord</Company>
+    <Product>Trame 2</Product>
+    <!-- CA1000 interdit les membres statiques sur les types génériques ; les fabriques
+         Result<T>.Ok(...) / Specification<T>.Depuis(...) sont l'usage idiomatique du pattern. -->
+    <NoWarn>$(NoWarn);CA1000</NoWarn>
+  </PropertyGroup>
+
+</Project>

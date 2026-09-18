@@ -1,0 +1,59 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>Textinord.Trame.Api</RootNamespace>
+    <AssemblyName>Textinord.Trame.Api</AssemblyName>
+    <Description>API Trame 2 — commandes Textinord (Minimal API versionnée, OpenAPI, JWT, prête pour Azure Container Apps).</Description>
+    <UserSecretsId>textinord-trame-api-8f2c1e</UserSecretsId>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <!-- Le titre de l'assembly sert de nom de service OpenTelemetry par défaut. -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <!--
+    Publication en container SANS Dockerfile : `dotnet publish /t:PublishContainer`.
+    L'image est construite par le SDK (pas besoin de démon Docker pour produire une archive :
+    ajouter -p ContainerArchiveOutputPath=./out/trame-api.tar.gz). Le Dockerfile à la racine
+    reste disponible pour les pipelines qui l'exigent : les deux approches produisent la même image.
+  -->
+  <PropertyGroup>
+    <EnableSdkContainerSupport>true</EnableSdkContainerSupport>
+    <ContainerRepository>textinord/trame-api</ContainerRepository>
+    <ContainerImageTags>1.0.0;latest</ContainerImageTags>
+    <ContainerBaseImage>mcr.microsoft.com/dotnet/aspnet:10.0</ContainerBaseImage>
+    <ContainerUser>app</ContainerUser>
+    <ContainerWorkingDirectory>/app</ContainerWorkingDirectory>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ContainerPort Include="8080" Type="tcp" />
+    <ContainerEnvironmentVariable Include="ASPNETCORE_HTTP_PORTS" Value="8080" />
+    <ContainerEnvironmentVariable Include="DOTNET_gcServer" Value="0" />
+    <ContainerLabel Include="org.opencontainers.image.title" Value="Textinord Trame 2 — API commandes" />
+    <ContainerLabel Include="org.opencontainers.image.vendor" Value="Textinord" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Versioning d'API (Asp.Versioning) et exposition des versions dans OpenAPI -->
+    <PackageReference Include="Asp.Versioning.Http" Version="10.2.3" />
+    <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="10.2.1" />
+    <PackageReference Include="Asp.Versioning.OpenApi" Version="10.2.3" />
+    <!-- OpenAPI intégré à ASP.NET Core 10 + interface Scalar -->
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.10" />
+    <!-- Microsoft.OpenApi 2.0.0 (dépendance transitive) porte une vulnérabilité connue : on impose une version corrigée. -->
+    <PackageReference Include="Microsoft.OpenApi" Version="2.12.2" />
+    <PackageReference Include="Scalar.AspNetCore" Version="2.17.3" />
+    <!-- Authentification par jeton JWT (dotnet user-jwts en local, Entra ID en production) -->
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.10" />
+    <!-- Observabilité : OpenTelemetry (traces, métriques, logs) vers la console ou OTLP (dashboard Aspire, Azure Monitor) -->
+    <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.18.0" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.18.0" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.18.0" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.Runtime" Version="1.18.0" />
+    <PackageReference Include="OpenTelemetry.Exporter.Console" Version="1.18.0" />
+    <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.18.0" />
+  </ItemGroup>
+
+</Project>

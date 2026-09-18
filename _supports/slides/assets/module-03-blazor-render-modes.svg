@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="f" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#333"/>
+    </marker>
+    <marker id="fd" markerWidth="10" markerHeight="10" refX="1" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M10,0 L0,5 L10,10 z" fill="#333"/>
+    </marker>
+  </defs>
+  <text x="600" y="36" text-anchor="middle" font-size="26" font-weight="bold" fill="#333">Blazor Web App : quatre render modes pour un même composant Razor</text>
+
+  <!-- Colonne 1 : SSR statique -->
+  <rect x="30" y="60" width="270" height="34" rx="8" fill="#333"/>
+  <text x="165" y="83" text-anchor="middle" font-size="18" font-weight="bold" fill="#fff">SSR statique</text>
+  <rect x="30" y="110" width="270" height="96" rx="10" fill="#f2f2f2" stroke="#333" stroke-width="2"/>
+  <text x="165" y="136" text-anchor="middle" font-size="17" font-weight="bold" fill="#333">Navigateur</text>
+  <text x="165" y="160" text-anchor="middle" font-size="15" fill="#555">HTML pur, aucun code C#</text>
+  <text x="165" y="182" text-anchor="middle" font-size="15" fill="#555">pas de @onclick, formulaire POST</text>
+  <line x1="165" y1="300" x2="165" y2="212" stroke="#333" stroke-width="2.5" marker-end="url(#f)"/>
+  <text x="180" y="262" font-size="15" fill="#333">HTML à chaque</text>
+  <text x="180" y="282" font-size="15" fill="#333">requête</text>
+  <rect x="30" y="300" width="270" height="96" rx="10" fill="#f2f5fb" stroke="#4A90D9" stroke-width="2"/>
+  <text x="165" y="326" text-anchor="middle" font-size="17" font-weight="bold" fill="#333">Serveur ASP.NET Core</text>
+  <text x="165" y="350" text-anchor="middle" font-size="15" fill="#555">rend le composant, l'oublie</text>
+  <text x="165" y="372" text-anchor="middle" font-size="15" fill="#555">navigation « enhanced »</text>
+  <text x="165" y="430" text-anchor="middle" font-size="15" font-weight="bold" fill="#333">Quand</text>
+  <text x="165" y="452" text-anchor="middle" font-size="15" fill="#555">pages de contenu, listes,</text>
+  <text x="165" y="472" text-anchor="middle" font-size="15" fill="#555">formulaires simples, SEO</text>
+
+  <!-- Colonne 2 : InteractiveServer -->
+  <rect x="320" y="60" width="270" height="34" rx="8" fill="#4A90D9"/>
+  <text x="455" y="83" text-anchor="middle" font-size="18" font-weight="bold" fill="#fff">InteractiveServer</text>
+  <rect x="320" y="110" width="270" height="96" rx="10" fill="#f2f2f2" stroke="#333" stroke-width="2"/>
+  <text x="455" y="136" text-anchor="middle" font-size="17" font-weight="bold" fill="#333">Navigateur</text>
+  <text x="455" y="160" text-anchor="middle" font-size="15" fill="#555">DOM mis à jour par</text>
+  <text x="455" y="182" text-anchor="middle" font-size="15" fill="#555">blazor.web.js (léger)</text>
+  <line x1="345" y1="212" x2="345" y2="298" stroke="#333" stroke-width="2.5" marker-end="url(#f)"/>
+  <line x1="565" y1="300" x2="565" y2="212" stroke="#333" stroke-width="2.5" marker-end="url(#f)"/>
+  <text x="455" y="245" text-anchor="middle" font-size="15" fill="#333">SignalR</text>
+  <text x="455" y="266" text-anchor="middle" font-size="14" fill="#555">événements ↓ diffs ↑</text>
+  <rect x="320" y="300" width="270" height="96" rx="10" fill="#f2f5fb" stroke="#4A90D9" stroke-width="2"/>
+  <text x="455" y="326" text-anchor="middle" font-size="17" font-weight="bold" fill="#333">Serveur ASP.NET Core</text>
+  <text x="455" y="350" text-anchor="middle" font-size="15" fill="#555">composant vivant en mémoire</text>
+  <text x="455" y="372" text-anchor="middle" font-size="15" fill="#555">un circuit par onglet</text>
+  <text x="455" y="430" text-anchor="middle" font-size="15" font-weight="bold" fill="#333">Quand</text>
+  <text x="455" y="452" text-anchor="middle" font-size="15" fill="#555">extranet Textinord, intranet,</text>
+  <text x="455" y="472" text-anchor="middle" font-size="15" fill="#555">accès direct aux services</text>
+
+  <!-- Colonne 3 : InteractiveWebAssembly -->
+  <rect x="610" y="60" width="270" height="34" rx="8" fill="#8CC63F"/>
+  <text x="745" y="83" text-anchor="middle" font-size="18" font-weight="bold" fill="#fff">InteractiveWebAssembly</text>
+  <rect x="610" y="110" width="270" height="96" rx="10" fill="#f2f2f2" stroke="#333" stroke-width="2"/>
+  <text x="745" y="136" text-anchor="middle" font-size="17" font-weight="bold" fill="#333">Navigateur</text>
+  <text x="745" y="160" text-anchor="middle" font-size="15" fill="#555">runtime .NET en WebAssembly</text>
+  <text x="745" y="182" text-anchor="middle" font-size="15" fill="#555">le composant tourne ici</text>
+  <line x1="635" y1="212" x2="635" y2="298" stroke="#333" stroke-width="2.5" marker-end="url(#f)"/>
+  <line x1="855" y1="300" x2="855" y2="212" stroke="#333" stroke-width="2.5" marker-end="url(#f)"/>
+  <text x="745" y="245" text-anchor="middle" font-size="15" fill="#333">HTTP / JSON</text>
+  <text x="745" y="266" text-anchor="middle" font-size="14" fill="#555">vers l'API, comme une SPA</text>
+  <rect x="610" y="300" width="270" height="96" rx="10" fill="#f2f5fb" stroke="#4A90D9" stroke-width="2"/>
+  <text x="745" y="326" text-anchor="middle" font-size="17" font-weight="bold" fill="#333">Serveur ASP.NET Core</text>
+  <text x="745" y="350" text-anchor="middle" font-size="15" fill="#555">sert les fichiers (1 à 3 Mo)</text>
+  <text x="745" y="372" text-anchor="middle" font-size="15" fill="#555">puis n'expose que l'API</text>
+  <text x="745" y="430" text-anchor="middle" font-size="15" font-weight="bold" fill="#333">Quand</text>
+  <text x="745" y="452" text-anchor="middle" font-size="15" fill="#555">hors ligne, PWA, très grand</text>
+  <text x="745" y="472" text-anchor="middle" font-size="15" fill="#555">nombre d'utilisateurs</text>
+
+  <!-- Colonne 4 : Auto -->
+  <rect x="900" y="60" width="270" height="34" rx="8" fill="#E67E22"/>
+  <text x="1035" y="83" text-anchor="middle" font-size="18" font-weight="bold" fill="#fff">InteractiveAuto</text>
+  <rect x="900" y="110" width="270" height="96" rx="10" fill="#f2f2f2" stroke="#333" stroke-width="2"/>
+  <text x="1035" y="136" text-anchor="middle" font-size="17" font-weight="bold" fill="#333">Navigateur</text>
+  <text x="1035" y="160" text-anchor="middle" font-size="15" fill="#555">1re visite : Server (immédiat)</text>
+  <text x="1035" y="182" text-anchor="middle" font-size="15" fill="#555">visites suivantes : WebAssembly</text>
+  <line x1="925" y1="212" x2="925" y2="298" stroke="#333" stroke-width="2.5" marker-end="url(#f)"/>
+  <line x1="1145" y1="300" x2="1145" y2="212" stroke="#333" stroke-width="2.5" marker-end="url(#f)"/>
+  <text x="1035" y="245" text-anchor="middle" font-size="15" fill="#333">SignalR, puis HTTP</text>
+  <text x="1035" y="266" text-anchor="middle" font-size="14" fill="#555">WASM téléchargé en fond</text>
+  <rect x="900" y="300" width="270" height="96" rx="10" fill="#f2f5fb" stroke="#4A90D9" stroke-width="2"/>
+  <text x="1035" y="326" text-anchor="middle" font-size="17" font-weight="bold" fill="#333">Serveur ASP.NET Core</text>
+  <text x="1035" y="350" text-anchor="middle" font-size="15" fill="#555">circuit au début, API ensuite</text>
+  <text x="1035" y="372" text-anchor="middle" font-size="15" fill="#555">deux projets (serveur + client)</text>
+  <text x="1035" y="430" text-anchor="middle" font-size="15" font-weight="bold" fill="#333">Quand</text>
+  <text x="1035" y="452" text-anchor="middle" font-size="15" fill="#555">site grand public : démarrage</text>
+  <text x="1035" y="472" text-anchor="middle" font-size="15" fill="#555">rapide puis charge serveur nulle</text>
+
+  <text x="600" y="520" text-anchor="middle" font-size="17" fill="#555">Le mode se choisit par composant (@rendermode) ou pour toute l'application (sur Routes dans App.razor) ;</text>
+  <text x="600" y="542" text-anchor="middle" font-size="17" fill="#555">un composant interactif est d'abord pré-rendu en HTML côté serveur, sauf si prerender: false</text>
+</svg>

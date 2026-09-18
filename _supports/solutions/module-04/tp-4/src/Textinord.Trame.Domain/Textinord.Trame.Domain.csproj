@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Noyau métier : aucune dépendance technique (ni EF Core, ni SQL). -->
+  <PropertyGroup>
+    <RootNamespace>Textinord.Trame.Domain</RootNamespace>
+  </PropertyGroup>
+</Project>

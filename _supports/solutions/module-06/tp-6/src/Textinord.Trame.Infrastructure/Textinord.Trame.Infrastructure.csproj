@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Persistance EF Core 10 sur SQLite, table Outbox, initialisation de la base. -->
+  <ItemGroup>
+    <ProjectReference Include="../Textinord.Trame.Domain/Textinord.Trame.Domain.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" />
+    <!-- Version corrigée du moteur SQLite natif (audit NuGet). -->
+    <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" />
+  </ItemGroup>
+</Project>

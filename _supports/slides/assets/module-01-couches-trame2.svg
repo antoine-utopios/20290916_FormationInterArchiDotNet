@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="fleche" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#333"/>
+    </marker>
+  </defs>
+  <text x="600" y="34" text-anchor="middle" font-size="24" font-weight="bold" fill="#333">Clean architecture pour Trame 2 : les dépendances pointent vers le domaine</text>
+
+  <!-- Présentation -->
+  <text x="40" y="60" font-size="15" fill="#555">Présentation — points d'entrée</text>
+  <rect x="40" y="66" width="190" height="74" rx="10" fill="#f2f2f2" stroke="#333" stroke-width="2"/>
+  <text x="135" y="94" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">API Minimal</text>
+  <text x="135" y="120" text-anchor="middle" font-size="14" fill="#555">Textinord.Trame.Api</text>
+  <rect x="245" y="66" width="190" height="74" rx="10" fill="#f2f2f2" stroke="#333" stroke-width="2"/>
+  <text x="340" y="94" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">Extranet Blazor</text>
+  <text x="340" y="120" text-anchor="middle" font-size="14" fill="#555">Textinord.Trame.Extranet</text>
+  <rect x="450" y="66" width="190" height="74" rx="10" fill="#f2f2f2" stroke="#333" stroke-width="2"/>
+  <text x="545" y="94" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">App entrepôt MAUI</text>
+  <text x="545" y="120" text-anchor="middle" font-size="14" fill="#555">Textinord.Trame.Entrepot</text>
+  <rect x="655" y="66" width="190" height="74" rx="10" fill="#f2f2f2" stroke="#333" stroke-width="2"/>
+  <text x="750" y="94" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">Worker messages</text>
+  <text x="750" y="120" text-anchor="middle" font-size="14" fill="#555">Textinord.Trame.Worker</text>
+  <line x1="442" y1="140" x2="442" y2="166" stroke="#333" stroke-width="3" marker-end="url(#fleche)"/>
+
+  <!-- Application -->
+  <rect x="40" y="168" width="805" height="86" rx="10" fill="#f2f5fb" stroke="#4A90D9" stroke-width="2"/>
+  <text x="442" y="194" text-anchor="middle" font-size="17" font-weight="bold" fill="#333">Application — Textinord.Trame.Application</text>
+  <text x="442" y="218" text-anchor="middle" font-size="14" fill="#333">Cas d'usage : ValiderCommande, CalculerTarif, EmettreOrdresPreparation</text>
+  <text x="442" y="240" text-anchor="middle" font-size="14" fill="#333">Ports : IDepotCommandes, IBusMessages, IHorloge · DTO · validation d'entrée</text>
+  <line x1="442" y1="254" x2="442" y2="280" stroke="#333" stroke-width="3" marker-end="url(#fleche)"/>
+
+  <!-- Domaine -->
+  <rect x="40" y="282" width="805" height="108" rx="10" fill="#eaf6da" stroke="#8CC63F" stroke-width="3"/>
+  <text x="442" y="308" text-anchor="middle" font-size="17" font-weight="bold" fill="#333">Domaine — Textinord.Trame.Domain (TP 1)</text>
+  <text x="442" y="332" text-anchor="middle" font-size="14" fill="#333">Entités : Commande, LigneCommande, Article, Client, Entrepot, OrdrePreparation</text>
+  <text x="442" y="354" text-anchor="middle" font-size="14" fill="#333">Règles : remise plafonnée à 30 %, machine à états, Specification de stock, Result</text>
+  <text x="442" y="376" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">Aucune référence à EF Core, ASP.NET Core ou Azure : testable avec xUnit seul</text>
+
+  <!-- Infrastructure -->
+  <rect x="880" y="66" width="285" height="324" rx="10" fill="#fdf5ec" stroke="#E67E22" stroke-width="2"/>
+  <text x="1022" y="94" text-anchor="middle" font-size="17" font-weight="bold" fill="#333">Infrastructure</text>
+  <text x="1022" y="116" text-anchor="middle" font-size="13" fill="#555">Textinord.Trame.Infrastructure</text>
+  <text x="1022" y="150" text-anchor="middle" font-size="14" fill="#333">EF Core 10 → Azure SQL</text>
+  <text x="1022" y="174" text-anchor="middle" font-size="14" fill="#333">Cosmos DB : catalogue, recherche</text>
+  <text x="1022" y="198" text-anchor="middle" font-size="14" fill="#333">MassTransit → Azure Service Bus</text>
+  <text x="1022" y="222" text-anchor="middle" font-size="14" fill="#333">Microsoft.Identity.Web → Entra ID</text>
+  <text x="1022" y="246" text-anchor="middle" font-size="14" fill="#333">Redis : cache, sessions</text>
+  <text x="1022" y="270" text-anchor="middle" font-size="14" fill="#333">Agents EDI, transporteurs</text>
+  <text x="1022" y="312" text-anchor="middle" font-size="13" font-style="italic" fill="#555">Adaptateurs : ils implémentent</text>
+  <text x="1022" y="332" text-anchor="middle" font-size="13" font-style="italic" fill="#555">les ports de l'application</text>
+  <line x1="880" y1="211" x2="849" y2="211" stroke="#333" stroke-width="3" marker-end="url(#fleche)"/>
+
+  <!-- Composition root -->
+  <rect x="40" y="412" width="1125" height="44" rx="10" fill="#333"/>
+  <text x="602" y="440" text-anchor="middle" font-size="16" fill="#fff">Program.cs — composition root : le seul endroit qui connaît toutes les couches et branche les implémentations (DI)</text>
+
+  <text x="600" y="498" text-anchor="middle" font-size="16" fill="#555">Clean, onion, hexagonale : trois noms pour une même règle — le domaine au centre, la technique à la périphérie</text>
+  <text x="600" y="528" text-anchor="middle" font-size="16" fill="#555">Changer de base ou de bus ne touche ni Domain ni Application : c'est le test de la réversibilité</text>
+</svg>

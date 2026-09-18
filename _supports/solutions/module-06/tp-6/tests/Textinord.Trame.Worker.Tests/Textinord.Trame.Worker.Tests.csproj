@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="../../src/Textinord.Trame.Worker/Textinord.Trame.Worker.csproj" />
+  </ItemGroup>
+</Project>

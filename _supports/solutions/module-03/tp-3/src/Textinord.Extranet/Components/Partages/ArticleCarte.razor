@@ -1,0 +1,45 @@
+<div class="card article-carte h-100">
+    <div class="card-body d-flex flex-column">
+        <h5 class="card-title">@Article.Libelle</h5>
+        <p class="card-subtitle text-muted mb-2">@Article.Reference · @Article.Famille</p>
+        <p class="prix mb-1">@Format.Prix(Article.PrixBase) <small class="text-muted">HT / pièce</small></p>
+        <p class="stock mb-3">
+            @if (Article.StockTotal > 0)
+            {
+                <span class="text-success">@Article.StockTotal en stock</span>
+            }
+            else
+            {
+                <span class="text-danger">Rupture</span>
+            }
+        </p>
+        <div class="input-group mt-auto">
+            <input type="number" class="form-control" min="1" aria-label="Quantité" @bind="quantite" />
+            <button class="btn btn-primary" type="button" @onclick="Ajouter" disabled="@(Article.StockTotal == 0)">
+                Ajouter
+            </button>
+        </div>
+    </div>
+</div>
+
+@code {
+    private int quantite = 1;
+
+    [Parameter, EditorRequired]
+    public Article Article { get; set; } = default!;
+
+    /// <summary>Remonte la demande d'ajout au parent : le composant ne connaît pas le panier.</summary>
+    [Parameter]
+    public EventCallback<AjoutPanier> OnAjouter { get; set; }
+
+    private async Task Ajouter()
+    {
+        if (quantite < 1)
+        {
+            quantite = 1;
+        }
+
+        await OnAjouter.InvokeAsync(new AjoutPanier(Article, quantite));
+        quantite = 1;
+    }
+}

@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="f" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#333"/>
+    </marker>
+    <marker id="fo" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#E67E22"/>
+    </marker>
+  </defs>
+  <text x="600" y="34" text-anchor="middle" font-size="26" font-weight="bold" fill="#333">Azure Service Bus : un topic « commandes », un abonnement par consommateur</text>
+
+  <!-- Producteur -->
+  <rect x="30" y="200" width="230" height="96" rx="12" fill="#eaf6da" stroke="#8CC63F" stroke-width="2.5"/>
+  <text x="145" y="230" text-anchor="middle" font-size="19" font-weight="bold" fill="#333">API Trame 2</text>
+  <text x="145" y="255" text-anchor="middle" font-size="15" fill="#555">SaveChanges : commande</text>
+  <text x="145" y="276" text-anchor="middle" font-size="15" fill="#555">+ ligne Outbox, puis relais</text>
+  <line x1="260" y1="248" x2="328" y2="248" stroke="#333" stroke-width="2.5" marker-end="url(#f)"/>
+  <text x="294" y="238" text-anchor="middle" font-size="13" fill="#555">Publish</text>
+
+  <!-- Namespace -->
+  <rect x="300" y="70" width="520" height="420" rx="14" fill="none" stroke="#4A90D9" stroke-width="2" stroke-dasharray="8 5"/>
+  <text x="560" y="96" text-anchor="middle" font-size="16" font-weight="bold" fill="#4A90D9">Namespace sb-textinord (niveau Premium, zone-redondant)</text>
+
+  <!-- Topic -->
+  <rect x="330" y="178" width="200" height="144" rx="12" fill="#4A90D9" stroke="#333" stroke-width="2"/>
+  <text x="430" y="204" text-anchor="middle" font-size="18" font-weight="bold" fill="#fff">Topic commandes</text>
+  <text x="430" y="227" text-anchor="middle" font-size="14" fill="#fff">CommandeValidee</text>
+  <text x="430" y="245" text-anchor="middle" font-size="14" fill="#fff">CommandeAnnulee</text>
+  <text x="430" y="272" text-anchor="middle" font-size="13" fill="#fff">déduplication sur MessageId</text>
+  <text x="430" y="291" text-anchor="middle" font-size="13" fill="#fff">envoi planifié, TTL, sessions</text>
+
+  <!-- Abonnements -->
+  <rect x="580" y="112" width="220" height="56" rx="10" fill="#f2f5fb" stroke="#333" stroke-width="1.5"/>
+  <text x="690" y="134" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">preparation-roubaix</text>
+  <text x="690" y="156" text-anchor="middle" font-size="14" fill="#555" font-family="Consolas, Menlo, monospace">Entrepot = 'RBX'</text>
+  <rect x="580" y="186" width="220" height="56" rx="10" fill="#f2f5fb" stroke="#333" stroke-width="1.5"/>
+  <text x="690" y="208" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">preparation-lesquin</text>
+  <text x="690" y="230" text-anchor="middle" font-size="14" fill="#555" font-family="Consolas, Menlo, monospace">Entrepot = 'LSQ'</text>
+  <rect x="580" y="260" width="220" height="56" rx="10" fill="#f2f5fb" stroke="#333" stroke-width="1.5"/>
+  <text x="690" y="282" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">facturation</text>
+  <text x="690" y="304" text-anchor="middle" font-size="14" fill="#555">tous les messages, sessions par client</text>
+  <rect x="580" y="334" width="220" height="56" rx="10" fill="#f2f5fb" stroke="#333" stroke-width="1.5"/>
+  <text x="690" y="356" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">audit</text>
+  <text x="690" y="378" text-anchor="middle" font-size="14" fill="#555">tous les messages, TTL 30 jours</text>
+  <rect x="580" y="416" width="220" height="56" rx="10" fill="#fdf5ec" stroke="#E67E22" stroke-width="2"/>
+  <text x="690" y="438" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">$DeadLetterQueue</text>
+  <text x="690" y="460" text-anchor="middle" font-size="14" fill="#555">après 10 livraisons ou TTL dépassé</text>
+
+  <!-- Liens topic → abonnements -->
+  <line x1="530" y1="215" x2="578" y2="140" stroke="#333" stroke-width="2" marker-end="url(#f)"/>
+  <line x1="530" y1="235" x2="578" y2="214" stroke="#333" stroke-width="2" marker-end="url(#f)"/>
+  <line x1="530" y1="262" x2="578" y2="288" stroke="#333" stroke-width="2" marker-end="url(#f)"/>
+  <line x1="530" y1="285" x2="578" y2="362" stroke="#333" stroke-width="2" marker-end="url(#f)"/>
+  <line x1="690" y1="390" x2="690" y2="414" stroke="#E67E22" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#fo)"/>
+
+  <!-- Consommateurs -->
+  <line x1="800" y1="140" x2="848" y2="140" stroke="#333" stroke-width="2" marker-end="url(#f)"/>
+  <rect x="850" y="112" width="320" height="56" rx="10" fill="#eaf6da" stroke="#8CC63F" stroke-width="2"/>
+  <text x="1010" y="134" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">Worker entrepôt Roubaix</text>
+  <text x="1010" y="156" text-anchor="middle" font-size="14" fill="#555">OrdrePreparationConsumer (idempotent)</text>
+  <line x1="800" y1="214" x2="848" y2="214" stroke="#333" stroke-width="2" marker-end="url(#f)"/>
+  <rect x="850" y="186" width="320" height="56" rx="10" fill="#eaf6da" stroke="#8CC63F" stroke-width="2"/>
+  <text x="1010" y="208" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">Worker entrepôt Lesquin</text>
+  <text x="1010" y="230" text-anchor="middle" font-size="14" fill="#555">même consumer, autre abonnement</text>
+  <line x1="800" y1="288" x2="848" y2="288" stroke="#333" stroke-width="2" marker-end="url(#f)"/>
+  <rect x="850" y="260" width="320" height="56" rx="10" fill="#f2f2f2" stroke="#333" stroke-width="1.5"/>
+  <text x="1010" y="282" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">Facturation (Trame, via l'ACL)</text>
+  <text x="1010" y="304" text-anchor="middle" font-size="14" fill="#555">ordre garanti par client (sessions)</text>
+  <line x1="800" y1="362" x2="848" y2="362" stroke="#333" stroke-width="2" marker-end="url(#f)"/>
+  <rect x="850" y="334" width="320" height="56" rx="10" fill="#f2f2f2" stroke="#333" stroke-width="1.5"/>
+  <text x="1010" y="356" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">Journal d'audit (Cosmos DB)</text>
+  <text x="1010" y="378" text-anchor="middle" font-size="14" fill="#555">archivage 10 ans des commandes</text>
+  <line x1="800" y1="444" x2="848" y2="444" stroke="#E67E22" stroke-width="2" marker-end="url(#fo)"/>
+  <rect x="850" y="416" width="320" height="56" rx="10" fill="#fdf5ec" stroke="#E67E22" stroke-width="2"/>
+  <text x="1010" y="438" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">Supervision : alerte, rejeu manuel</text>
+  <text x="1010" y="460" text-anchor="middle" font-size="14" fill="#555">Application Insights, astreinte de Sofia</text>
+
+  <text x="600" y="530" text-anchor="middle" font-size="18" fill="#555">Peek-lock : le message n'est supprimé qu'après Complete ; un consumer qui tombe le rend à la file (redélivrance).</text>
+</svg>

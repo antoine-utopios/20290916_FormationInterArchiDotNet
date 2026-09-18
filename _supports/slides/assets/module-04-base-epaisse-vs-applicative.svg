@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="fa" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 z" fill="#333"/>
+    </marker>
+  </defs>
+  <text x="600" y="34" text-anchor="middle" font-size="26" font-weight="bold" fill="#333">Trame : la base décide ; Trame 2 : la base range, le domaine décide</text>
+
+  <!-- Panneau gauche : Trame -->
+  <rect x="30" y="58" width="520" height="380" rx="12" fill="#fdf5ec" stroke="#E67E22" stroke-width="2"/>
+  <text x="290" y="88" text-anchor="middle" font-size="20" font-weight="bold" fill="#E67E22">Trame (2011) : base de données épaisse</text>
+
+  <rect x="70" y="106" width="440" height="56" rx="8" fill="#fff" stroke="#333" stroke-width="2"/>
+  <text x="290" y="130" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">WinForms .NET Framework 4.8</text>
+  <text x="290" y="151" text-anchor="middle" font-size="14" fill="#555">code-behind : un peu de règles de tarif en C#</text>
+
+  <line x1="290" y1="162" x2="290" y2="188" stroke="#333" stroke-width="3" marker-end="url(#fa)"/>
+
+  <rect x="70" y="190" width="440" height="210" rx="8" fill="#E67E22" stroke="#333" stroke-width="2"/>
+  <text x="290" y="216" text-anchor="middle" font-size="17" font-weight="bold" fill="#fff">SQL Server 2016</text>
+  <rect x="90" y="230" width="400" height="34" rx="6" fill="#fff" fill-opacity="0.92"/>
+  <text x="290" y="253" text-anchor="middle" font-size="15" fill="#333">400 procédures : validation, remises, stock</text>
+  <rect x="90" y="272" width="400" height="34" rx="6" fill="#fff" fill-opacity="0.92"/>
+  <text x="290" y="295" text-anchor="middle" font-size="15" fill="#333">triggers : machine à états et numérotation</text>
+  <rect x="90" y="314" width="400" height="34" rx="6" fill="#fff" fill-opacity="0.92"/>
+  <text x="290" y="337" text-anchor="middle" font-size="15" fill="#333">règle de remise écrite deux fois (C# et T-SQL)</text>
+  <rect x="90" y="356" width="400" height="34" rx="6" fill="#fff" fill-opacity="0.92"/>
+  <text x="290" y="379" text-anchor="middle" font-size="15" fill="#333">aucun test automatisé, déploiement manuel</text>
+
+  <text x="290" y="426" text-anchor="middle" font-size="15" fill="#7a4a10">Rapide à écrire en 2011, impossible à faire évoluer en 2026</text>
+
+  <!-- Panneau droit : Trame 2 -->
+  <rect x="650" y="58" width="520" height="380" rx="12" fill="#f2f5fb" stroke="#4A90D9" stroke-width="2"/>
+  <text x="910" y="88" text-anchor="middle" font-size="20" font-weight="bold" fill="#4A90D9">Trame 2 : la logique dans le domaine</text>
+
+  <rect x="690" y="106" width="440" height="50" rx="8" fill="#fff" stroke="#333" stroke-width="2"/>
+  <text x="910" y="128" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">API ASP.NET Core, extranet Blazor, MAUI</text>
+  <text x="910" y="147" text-anchor="middle" font-size="14" fill="#555">aucune règle métier ici</text>
+
+  <line x1="910" y1="156" x2="910" y2="176" stroke="#333" stroke-width="3" marker-end="url(#fa)"/>
+
+  <rect x="690" y="178" width="440" height="70" rx="8" fill="#8CC63F" stroke="#333" stroke-width="2"/>
+  <text x="910" y="203" text-anchor="middle" font-size="16" font-weight="bold" fill="#fff">Textinord.Trame.Domain</text>
+  <text x="910" y="224" text-anchor="middle" font-size="14" fill="#fff">remises (plafond 30 %), machine à états, stock</text>
+  <text x="910" y="242" text-anchor="middle" font-size="14" fill="#fff">testé par xUnit, sans base de données</text>
+
+  <line x1="910" y1="248" x2="910" y2="268" stroke="#333" stroke-width="3" marker-end="url(#fa)"/>
+
+  <rect x="690" y="270" width="440" height="56" rx="8" fill="#fff" stroke="#333" stroke-width="2"/>
+  <text x="910" y="293" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">EF Core 10 + Dapper</text>
+  <text x="910" y="313" text-anchor="middle" font-size="14" fill="#555">mapping, migrations, unité de travail, SQL explicite</text>
+
+  <line x1="910" y1="326" x2="910" y2="346" stroke="#333" stroke-width="3" marker-end="url(#fa)"/>
+
+  <rect x="690" y="348" width="440" height="56" rx="8" fill="#4A90D9" stroke="#333" stroke-width="2"/>
+  <text x="910" y="371" text-anchor="middle" font-size="16" font-weight="bold" fill="#fff">Azure SQL</text>
+  <text x="910" y="391" text-anchor="middle" font-size="14" fill="#fff">tables, contraintes, index, vues, rowversion, temporal</text>
+
+  <text x="910" y="426" text-anchor="middle" font-size="15" fill="#1f4e8c">La base garantit l'intégrité, elle ne décide plus</text>
+
+  <!-- Flèche de migration -->
+  <line x1="552" y1="248" x2="646" y2="248" stroke="#333" stroke-width="4" marker-end="url(#fa)"/>
+
+  <text x="600" y="482" text-anchor="middle" font-size="18" fill="#555">Désépaissir en quatre temps : inventorier les 400 procédures, écrire le test de la règle telle qu'elle est,</text>
+  <text x="600" y="508" text-anchor="middle" font-size="18" fill="#555">la réécrire dans le domaine derrière ce test, basculer les appels ; la procédure reste en lecture seule 18 mois</text>
+  <text x="600" y="534" text-anchor="middle" font-size="18" fill="#555">(compatibilité WinForms), puis disparaît. Les vues, index et contraintes restent : ce n'est pas de la logique.</text>
+</svg>

@@ -1,0 +1,16 @@
+# Sorties de compilation .NET
+bin/
+obj/
+*.user
+*.suo
+.vs/
+TestResults/
+
+# Bases SQLite locales générées par la démo et le TP
+*.db
+*.db-shm
+*.db-wal
+
+# IDE
+.idea/
+*.swp

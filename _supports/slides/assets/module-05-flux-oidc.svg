@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="fleche" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 z" fill="#333"/>
+    </marker>
+    <marker id="flecheBleue" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4A90D9"/>
+    </marker>
+  </defs>
+  <text x="600" y="32" text-anchor="middle" font-size="26" font-weight="bold" fill="#333">OpenID Connect + OAuth 2.0 (code + PKCE) : un client de Textinord se connecte à l'extranet</text>
+
+  <!-- Acteurs -->
+  <rect x="40" y="58" width="220" height="56" rx="10" fill="#f2f2f2" stroke="#333" stroke-width="2"/>
+  <text x="150" y="82" text-anchor="middle" font-size="17" font-weight="bold" fill="#333">Navigateur</text>
+  <text x="150" y="104" text-anchor="middle" font-size="15" fill="#555">acheteur, Hôtel Grand Nord</text>
+
+  <rect x="340" y="58" width="220" height="56" rx="10" fill="#4A90D9"/>
+  <text x="450" y="82" text-anchor="middle" font-size="17" font-weight="bold" fill="#fff">Extranet Blazor</text>
+  <text x="450" y="104" text-anchor="middle" font-size="15" fill="#fff">Microsoft.Identity.Web</text>
+
+  <rect x="640" y="58" width="220" height="56" rx="10" fill="#333"/>
+  <text x="750" y="82" text-anchor="middle" font-size="17" font-weight="bold" fill="#fff">Entra External ID</text>
+  <text x="750" y="104" text-anchor="middle" font-size="15" fill="#fff">fournisseur d'identité (IdP)</text>
+
+  <rect x="940" y="58" width="220" height="56" rx="10" fill="#8CC63F"/>
+  <text x="1050" y="82" text-anchor="middle" font-size="17" font-weight="bold" fill="#fff">API Trame 2</text>
+  <text x="1050" y="104" text-anchor="middle" font-size="15" fill="#fff">JWT bearer, policies</text>
+
+  <!-- Lignes de vie -->
+  <line x1="150" y1="114" x2="150" y2="500" stroke="#bbb" stroke-width="2" stroke-dasharray="6,6"/>
+  <line x1="450" y1="114" x2="450" y2="500" stroke="#bbb" stroke-width="2" stroke-dasharray="6,6"/>
+  <line x1="750" y1="114" x2="750" y2="500" stroke="#bbb" stroke-width="2" stroke-dasharray="6,6"/>
+  <line x1="1050" y1="114" x2="1050" y2="500" stroke="#bbb" stroke-width="2" stroke-dasharray="6,6"/>
+
+  <!-- 1. accès -->
+  <line x1="150" y1="150" x2="446" y2="150" stroke="#333" stroke-width="2.5" marker-end="url(#fleche)"/>
+  <text x="300" y="142" text-anchor="middle" font-size="15" fill="#333">1. GET /commandes (pas de session)</text>
+
+  <!-- 2. redirection vers /authorize -->
+  <line x1="450" y1="190" x2="154" y2="190" stroke="#333" stroke-width="2.5" marker-end="url(#fleche)"/>
+  <text x="300" y="182" text-anchor="middle" font-size="15" fill="#333">2. 302 vers /authorize + PKCE</text>
+
+  <!-- 3. login MFA -->
+  <line x1="150" y1="230" x2="746" y2="230" stroke="#333" stroke-width="2.5" marker-end="url(#fleche)"/>
+  <text x="450" y="222" text-anchor="middle" font-size="15" fill="#333">3. authentification (mot de passe + MFA), consentement</text>
+
+  <!-- 4. code -->
+  <line x1="750" y1="270" x2="154" y2="270" stroke="#333" stroke-width="2.5" marker-end="url(#fleche)"/>
+  <text x="450" y="262" text-anchor="middle" font-size="15" fill="#333">4. 302 vers /signin-oidc?code=… (le navigateur ne voit jamais de jeton)</text>
+
+  <!-- 5. échange code -> jetons -->
+  <line x1="150" y1="310" x2="446" y2="310" stroke="#333" stroke-width="2.5" marker-end="url(#fleche)"/>
+  <text x="300" y="302" text-anchor="middle" font-size="15" fill="#333">5. POST /signin-oidc (code)</text>
+  <line x1="450" y1="350" x2="746" y2="350" stroke="#4A90D9" stroke-width="2.5" marker-end="url(#flecheBleue)"/>
+  <text x="600" y="342" text-anchor="middle" font-size="15" fill="#333">6. POST /token : code + code_verifier + secret client</text>
+  <line x1="750" y1="390" x2="454" y2="390" stroke="#4A90D9" stroke-width="2.5" marker-end="url(#flecheBleue)"/>
+  <text x="600" y="382" text-anchor="middle" font-size="15" fill="#333">7. id_token (qui) + access_token (pour l'API) + refresh_token</text>
+
+  <!-- 8. cookie -->
+  <line x1="450" y1="430" x2="154" y2="430" stroke="#333" stroke-width="2.5" marker-end="url(#fleche)"/>
+  <text x="300" y="422" text-anchor="middle" font-size="15" fill="#333">8. cookie de session chiffré</text>
+
+  <!-- 9. appel API -->
+  <line x1="450" y1="470" x2="1046" y2="470" stroke="#8CC63F" stroke-width="2.5" marker-end="url(#fleche)"/>
+  <text x="750" y="462" text-anchor="middle" font-size="15" fill="#333">9. GET /api/v1/commandes — Authorization: Bearer access_token</text>
+
+  <!-- 10. validation -->
+  <rect x="890" y="482" width="290" height="60" rx="8" fill="#eaf6da" stroke="#8CC63F" stroke-width="2"/>
+  <text x="1035" y="504" text-anchor="middle" font-size="14" fill="#333">10. signature (clés JWKS de l'IdP), issuer,</text>
+  <text x="1035" y="524" text-anchor="middle" font-size="14" fill="#333">audience, expiration, puis claims → policy</text>
+
+  <text x="440" y="520" text-anchor="middle" font-size="15" fill="#555">Salariés : même flux avec Entra ID (tenant Textinord, hybride AD via Entra Connect).</text>
+  <text x="440" y="542" text-anchor="middle" font-size="15" fill="#555">Application MAUI des scanners : même flux, sans secret client (client public, PKCE obligatoire).</text>
+</svg>

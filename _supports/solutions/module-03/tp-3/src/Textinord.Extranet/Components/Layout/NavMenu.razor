@@ -1,0 +1,41 @@
+@implements IDisposable
+@inject PanierService Panier
+
+<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">Textinord</a>
+    </div>
+</div>
+
+<input type="checkbox" title="Menu de navigation" class="navbar-toggler" />
+
+<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
+    <nav class="nav flex-column">
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">Accueil</NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="catalogue">Catalogue</NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="panier">
+                Panier
+                @if (Panier.NombrePieces > 0)
+                {
+                    <span class="badge bg-light text-dark ms-2">@Panier.NombrePieces</span>
+                }
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="commande">Commander</NavLink>
+        </div>
+    </nav>
+</div>
+
+@code {
+    protected override void OnInitialized() => Panier.Changement += Rafraichir;
+
+    private void Rafraichir() => InvokeAsync(StateHasChanged);
+
+    public void Dispose() => Panier.Changement -= Rafraichir;
+}

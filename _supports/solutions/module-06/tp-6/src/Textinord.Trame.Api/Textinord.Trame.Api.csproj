@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <!-- API Trame 2 : Minimal API, OpenAPI, écriture transactionnelle commande + Outbox. -->
+  <ItemGroup>
+    <ProjectReference Include="../Textinord.Trame.Infrastructure/Textinord.Trame.Infrastructure.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+    <!-- Version corrigée de la bibliothèque OpenAPI (audit NuGet). -->
+    <PackageReference Include="Microsoft.OpenApi" />
+  </ItemGroup>
+</Project>

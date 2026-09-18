@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="fleche" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#333"/>
+    </marker>
+  </defs>
+
+  <text x="600" y="36" text-anchor="middle" font-size="26" font-weight="bold" fill="#333">La plateforme .NET en 2026 : une pile unifiée, un héritage en maintenance</text>
+
+  <!-- Couche workloads -->
+  <text x="40" y="78" font-size="14" font-weight="bold" fill="#4A90D9">MODÈLES D'APPLICATION</text>
+  <rect x="40" y="86" width="140" height="56" rx="8" fill="#4A90D9"/>
+  <text x="110" y="112" text-anchor="middle" font-size="15" font-weight="bold" fill="#fff">ASP.NET Core 10</text>
+  <text x="110" y="132" text-anchor="middle" font-size="13" fill="#fff">API, MVC, SignalR</text>
+  <rect x="192" y="86" width="140" height="56" rx="8" fill="#4A90D9"/>
+  <text x="262" y="112" text-anchor="middle" font-size="15" font-weight="bold" fill="#fff">Blazor Web App</text>
+  <text x="262" y="132" text-anchor="middle" font-size="13" fill="#fff">SSR, Server, WASM</text>
+  <rect x="344" y="86" width="140" height="56" rx="8" fill="#4A90D9"/>
+  <text x="414" y="112" text-anchor="middle" font-size="15" font-weight="bold" fill="#fff">.NET MAUI</text>
+  <text x="414" y="132" text-anchor="middle" font-size="13" fill="#fff">Android, iOS, Windows</text>
+  <rect x="496" y="86" width="140" height="56" rx="8" fill="#4A90D9"/>
+  <text x="566" y="112" text-anchor="middle" font-size="15" font-weight="bold" fill="#fff">WinForms · WPF</text>
+  <text x="566" y="132" text-anchor="middle" font-size="13" fill="#fff">Windows uniquement</text>
+  <rect x="648" y="86" width="140" height="56" rx="8" fill="#4A90D9"/>
+  <text x="718" y="112" text-anchor="middle" font-size="15" font-weight="bold" fill="#fff">Worker · Console</text>
+  <text x="718" y="132" text-anchor="middle" font-size="13" fill="#fff">Generic Host, Aspire</text>
+
+  <!-- Bibliothèques -->
+  <rect x="40" y="160" width="748" height="56" rx="8" fill="#f2f5fb" stroke="#4A90D9" stroke-width="2"/>
+  <text x="414" y="184" text-anchor="middle" font-size="15" font-weight="bold" fill="#333">Bibliothèques</text>
+  <text x="414" y="206" text-anchor="middle" font-size="14" fill="#555">BCL (System.*), EF Core 10, Microsoft.Extensions (DI, Logging, Hosting, Options), packages NuGet</text>
+
+  <!-- Runtime -->
+  <rect x="40" y="234" width="748" height="56" rx="8" fill="#eaf6da" stroke="#8CC63F" stroke-width="2"/>
+  <text x="414" y="258" text-anchor="middle" font-size="15" font-weight="bold" fill="#333">Runtime CoreCLR</text>
+  <text x="414" y="280" text-anchor="middle" font-size="14" fill="#555">JIT tiered + PGO dynamique, GC générationnel, ReadyToRun, NativeAOT ; Mono pour Android, iOS, WebAssembly</text>
+
+  <!-- SDK -->
+  <rect x="40" y="308" width="748" height="56" rx="8" fill="#f2f2f2" stroke="#333" stroke-width="2"/>
+  <text x="414" y="332" text-anchor="middle" font-size="15" font-weight="bold" fill="#333">SDK .NET 10</text>
+  <text x="414" y="354" text-anchor="middle" font-size="14" fill="#555">dotnet CLI, MSBuild, Roslyn (C# 14, F# 10, VB), analyzers, templates, publish en conteneur</text>
+
+  <!-- OS -->
+  <rect x="40" y="382" width="748" height="56" rx="8" fill="#333"/>
+  <text x="414" y="406" text-anchor="middle" font-size="15" font-weight="bold" fill="#fff">Systèmes</text>
+  <text x="414" y="428" text-anchor="middle" font-size="14" fill="#fff">Windows, Linux, macOS, Android, iOS, navigateur (WebAssembly), conteneurs Docker</text>
+
+  <!-- Colonne droite : héritage -->
+  <rect x="840" y="86" width="320" height="130" rx="10" fill="#fdf5ec" stroke="#E67E22" stroke-width="2" stroke-dasharray="8,5"/>
+  <text x="1000" y="112" text-anchor="middle" font-size="17" font-weight="bold" fill="#333">.NET Framework 4.8.1</text>
+  <text x="1000" y="136" text-anchor="middle" font-size="14" fill="#555">Windows uniquement, livré avec l'OS</text>
+  <text x="1000" y="158" text-anchor="middle" font-size="14" fill="#555">maintenance : correctifs de sécurité,</text>
+  <text x="1000" y="180" text-anchor="middle" font-size="14" fill="#555">aucune nouveauté, C# 7.3 en pratique</text>
+  <text x="1000" y="204" text-anchor="middle" font-size="14" font-weight="bold" fill="#a85f14">Trame : WinForms, WCF, MSMQ, COM+</text>
+
+  <rect x="840" y="234" width="320" height="56" rx="28" fill="#f2f5fb" stroke="#4A90D9" stroke-width="2"/>
+  <text x="1000" y="258" text-anchor="middle" font-size="15" font-weight="bold" fill="#333">Pont : .NET Standard 2.0</text>
+  <text x="1000" y="279" text-anchor="middle" font-size="13" fill="#555">bibliothèques partagées pendant la migration</text>
+  <line x1="838" y1="262" x2="800" y2="262" stroke="#333" stroke-width="2.5" marker-end="url(#fleche)"/>
+  <line x1="1000" y1="216" x2="1000" y2="232" stroke="#333" stroke-width="2.5" marker-end="url(#fleche)"/>
+
+  <rect x="840" y="308" width="320" height="130" rx="10" fill="#eaf6da" stroke="#8CC63F" stroke-width="2"/>
+  <text x="1000" y="334" text-anchor="middle" font-size="17" font-weight="bold" fill="#333">Cadence de support</text>
+  <text x="1000" y="360" text-anchor="middle" font-size="14" fill="#333">.NET 10 LTS : nov. 2025 → nov. 2028</text>
+  <text x="1000" y="382" text-anchor="middle" font-size="14" fill="#333">.NET 8 LTS : fin de support nov. 2026</text>
+  <text x="1000" y="404" text-anchor="middle" font-size="14" fill="#333">.NET 11 STS : nov. 2026, 24 mois</text>
+  <text x="1000" y="426" text-anchor="middle" font-size="14" fill="#555">une version majeure chaque novembre</text>
+
+  <text x="600" y="490" text-anchor="middle" font-size="17" fill="#555">Une seule cible pour Trame 2 : .NET 10 LTS. .NET Framework ne reçoit plus que des correctifs.</text>
+  <text x="600" y="518" text-anchor="middle" font-size="15" fill="#777">Le pont .NET Standard 2.0 ne sert qu'aux bibliothèques partagées avec les postes WinForms restants (18 mois).</text>
+</svg>

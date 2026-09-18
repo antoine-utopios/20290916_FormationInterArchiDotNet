@@ -1,0 +1,30 @@
+# Sorties de compilation
+bin/
+obj/
+out/
+publish/
+TestResults/
+*.trx
+
+# Visual Studio / Rider / VS Code
+.vs/
+.idea/
+*.user
+*.suo
+*.swp
+.vscode/*
+!.vscode/launch.json
+!.vscode/tasks.json
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/packages/
+
+# Secrets et environnement local
+appsettings.*.local.json
+*.env
+.env
+
+# macOS
+.DS_Store

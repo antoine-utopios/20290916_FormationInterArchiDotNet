@@ -1,0 +1,20 @@
+@page "/"
+@inject PanierService Panier
+
+<PageTitle>Extranet Textinord</PageTitle>
+
+<h1>Bienvenue, @Panier.Client.RaisonSociale</h1>
+
+<p>
+    Cet extranet vous donne accès au catalogue Textinord (vêtements de travail, EPI textiles,
+    linge pour l'hôtellerie) avec vos conditions tarifaires : remise client de
+    @Format.Pourcent(Panier.Client.RemiseClientPourcent), remise volume de
+    @Format.Pourcent(Tarification.RemiseVolumePourcent) au-delà de @Tarification.SeuilVolume pièces sur une ligne,
+    plafond de @Format.Pourcent(Tarification.PlafondPourcent).
+</p>
+
+<ul>
+    <li><a href="catalogue">Parcourir le catalogue</a> (40 000 références en production, 120 dans cette version de démonstration)</li>
+    <li><a href="panier">Consulter votre panier</a></li>
+    <li><a href="commande">Passer commande</a> : livraison sous 48 h depuis Roubaix ou Lesquin</li>
+</ul>

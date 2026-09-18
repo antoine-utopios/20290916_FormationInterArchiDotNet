@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="f" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#333"/>
+    </marker>
+  </defs>
+  <text x="600" y="34" text-anchor="middle" font-size="26" font-weight="bold" fill="#333">Le pipeline Trame 2 : cinq étapes, une seule définition YAML dans le dépôt</text>
+
+  <!-- Étape 1 : Build -->
+  <rect x="30" y="70" width="215" height="212" rx="12" fill="#f2f2f2" stroke="#333" stroke-width="2"/>
+  <rect x="30" y="70" width="215" height="42" rx="12" fill="#333"/>
+  <rect x="30" y="98" width="215" height="14" fill="#333"/>
+  <text x="137" y="98" text-anchor="middle" font-size="19" font-weight="bold" fill="#fff">1. Build</text>
+  <text x="137" y="140" text-anchor="middle" font-size="15" fill="#333">checkout, fetchDepth 0</text>
+  <text x="137" y="166" text-anchor="middle" font-size="15" fill="#333">restore, build Release</text>
+  <text x="137" y="192" text-anchor="middle" font-size="15" fill="#333">warnings = erreurs</text>
+  <text x="137" y="218" text-anchor="middle" font-size="15" fill="#333">analyzers Roslyn</text>
+  <text x="137" y="244" text-anchor="middle" font-size="15" fill="#333">nbgv : version SemVer</text>
+  <line x1="245" y1="176" x2="263" y2="176" stroke="#333" stroke-width="3" marker-end="url(#f)"/>
+
+  <!-- Étape 2 : Test -->
+  <rect x="265" y="70" width="215" height="212" rx="12" fill="#f2f2f2" stroke="#333" stroke-width="2"/>
+  <rect x="265" y="70" width="215" height="42" rx="12" fill="#333"/>
+  <rect x="265" y="98" width="215" height="14" fill="#333"/>
+  <text x="372" y="98" text-anchor="middle" font-size="19" font-weight="bold" fill="#fff">2. Test</text>
+  <text x="372" y="140" text-anchor="middle" font-size="15" fill="#333">unitaires (xUnit, NSubstitute)</text>
+  <text x="372" y="166" text-anchor="middle" font-size="15" fill="#333">intégration (SQLite, harness)</text>
+  <text x="372" y="192" text-anchor="middle" font-size="15" fill="#333">résultats TRX publiés</text>
+  <text x="372" y="218" text-anchor="middle" font-size="15" fill="#333">couverture Cobertura</text>
+  <text x="372" y="244" text-anchor="middle" font-size="15" fill="#333">échec = pipeline arrêté</text>
+  <line x1="480" y1="176" x2="498" y2="176" stroke="#333" stroke-width="3" marker-end="url(#f)"/>
+
+  <!-- Étape 3 : Publish -->
+  <rect x="500" y="70" width="215" height="212" rx="12" fill="#f2f5fb" stroke="#4A90D9" stroke-width="2"/>
+  <rect x="500" y="70" width="215" height="42" rx="12" fill="#4A90D9"/>
+  <rect x="500" y="98" width="215" height="14" fill="#4A90D9"/>
+  <text x="607" y="98" text-anchor="middle" font-size="19" font-weight="bold" fill="#fff">3. Publish</text>
+  <text x="607" y="140" text-anchor="middle" font-size="15" fill="#333">dotnet publish API, Worker</text>
+  <text x="607" y="166" text-anchor="middle" font-size="15" fill="#333">images PublishContainer</text>
+  <text x="607" y="192" text-anchor="middle" font-size="15" fill="#333">artefact + CHANGELOG</text>
+  <text x="607" y="218" text-anchor="middle" font-size="15" fill="#333">SBOM, signature</text>
+  <text x="607" y="244" text-anchor="middle" font-size="15" fill="#333">jamais sur une PR</text>
+  <line x1="715" y1="176" x2="733" y2="176" stroke="#333" stroke-width="3" marker-end="url(#f)"/>
+
+  <!-- Étape 4 : Recette -->
+  <rect x="735" y="70" width="215" height="212" rx="12" fill="#eaf6da" stroke="#8CC63F" stroke-width="2"/>
+  <rect x="735" y="70" width="215" height="42" rx="12" fill="#8CC63F"/>
+  <rect x="735" y="98" width="215" height="14" fill="#8CC63F"/>
+  <text x="842" y="98" text-anchor="middle" font-size="19" font-weight="bold" fill="#fff">4. Recette</text>
+  <text x="842" y="140" text-anchor="middle" font-size="15" fill="#333">env. trame2-recette</text>
+  <text x="842" y="166" text-anchor="middle" font-size="15" fill="#333">déploiement automatique</text>
+  <text x="842" y="192" text-anchor="middle" font-size="15" fill="#333">main et release/*</text>
+  <text x="842" y="218" text-anchor="middle" font-size="15" fill="#333">test de fumée OpenAPI</text>
+  <text x="842" y="244" text-anchor="middle" font-size="15" fill="#333">recette métier (Awa)</text>
+  <line x1="950" y1="176" x2="968" y2="176" stroke="#333" stroke-width="3" marker-end="url(#f)"/>
+
+  <!-- Étape 5 : Production -->
+  <rect x="970" y="70" width="215" height="212" rx="12" fill="#fdf5ec" stroke="#E67E22" stroke-width="2"/>
+  <rect x="970" y="70" width="215" height="42" rx="12" fill="#E67E22"/>
+  <rect x="970" y="98" width="215" height="14" fill="#E67E22"/>
+  <text x="1077" y="98" text-anchor="middle" font-size="19" font-weight="bold" fill="#fff">5. Production</text>
+  <text x="1077" y="140" text-anchor="middle" font-size="15" fill="#333">approbation manuelle</text>
+  <text x="1077" y="166" text-anchor="middle" font-size="15" fill="#333">branches release/vX.Y</text>
+  <text x="1077" y="192" text-anchor="middle" font-size="15" fill="#333">canary 10 % puis 100 %</text>
+  <text x="1077" y="218" text-anchor="middle" font-size="15" fill="#333">rollback automatique</text>
+  <text x="1077" y="244" text-anchor="middle" font-size="15" fill="#333">traçabilité : qui, quoi, quand</text>
+
+  <!-- Azure DevOps -->
+  <text x="30" y="322" font-size="17" font-weight="bold" fill="#333">Azure DevOps, les cinq services qui portent ce pipeline</text>
+  <rect x="30" y="334" width="215" height="70" rx="10" fill="#f2f5fb" stroke="#4A90D9" stroke-width="1.5"/>
+  <text x="137" y="360" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">Boards</text>
+  <text x="137" y="384" text-anchor="middle" font-size="14" fill="#555">work items, sprints, backlog</text>
+  <rect x="265" y="334" width="215" height="70" rx="10" fill="#f2f5fb" stroke="#4A90D9" stroke-width="1.5"/>
+  <text x="372" y="360" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">Repos</text>
+  <text x="372" y="384" text-anchor="middle" font-size="14" fill="#555">Git, pull requests, policies</text>
+  <rect x="500" y="334" width="215" height="70" rx="10" fill="#f2f5fb" stroke="#4A90D9" stroke-width="1.5"/>
+  <text x="607" y="360" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">Pipelines</text>
+  <text x="607" y="384" text-anchor="middle" font-size="14" fill="#555">YAML, environnements, checks</text>
+  <rect x="735" y="334" width="215" height="70" rx="10" fill="#f2f5fb" stroke="#4A90D9" stroke-width="1.5"/>
+  <text x="842" y="360" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">Artifacts</text>
+  <text x="842" y="384" text-anchor="middle" font-size="14" fill="#555">flux NuGet, artefacts de build</text>
+  <rect x="970" y="334" width="215" height="70" rx="10" fill="#f2f5fb" stroke="#4A90D9" stroke-width="1.5"/>
+  <text x="1077" y="360" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">Test Plans</text>
+  <text x="1077" y="384" text-anchor="middle" font-size="14" fill="#555">tests manuels, exploratoires</text>
+
+  <!-- GitHub -->
+  <rect x="30" y="424" width="1155" height="48" rx="10" fill="#f2f2f2" stroke="#333" stroke-width="1.5"/>
+  <text x="607" y="454" text-anchor="middle" font-size="16" fill="#333">Équivalent GitHub : Issues et Projects · dépôt Git et pull requests · Actions (workflows YAML, environments avec reviewers) · Packages</text>
+
+  <text x="600" y="530" text-anchor="middle" font-size="18" fill="#555">Un commit sur main = build + tests + recette ; une branche release/vX.Y = production, après approbation.</text>
+</svg>

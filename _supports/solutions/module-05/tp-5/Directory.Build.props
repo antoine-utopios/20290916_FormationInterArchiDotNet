@@ -1,0 +1,16 @@
+<Project>
+
+  <!-- Réglages communs aux projets de Trame 2 (mêmes principes qu'au TP 1 et au TP 2). -->
+  <PropertyGroup>
+    <LangVersion>14</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <Company>Textinord</Company>
+    <Product>Trame 2</Product>
+    <Version>1.0.0</Version>
+    <Authors>Équipe Trame 2 — Textinord</Authors>
+  </PropertyGroup>
+
+</Project>

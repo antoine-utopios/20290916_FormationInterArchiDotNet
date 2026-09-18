@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="fleche" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#333"/>
+    </marker>
+  </defs>
+  <text x="600" y="36" text-anchor="middle" font-size="26" font-weight="bold" fill="#333">Trois patterns de présentation : qui parle à qui, et qui est testable sans écran</text>
+
+  <!-- ===== Colonne MVC ===== -->
+  <text x="220" y="78" text-anchor="middle" font-size="21" font-weight="bold" fill="#4A90D9">MVC — ASP.NET Core</text>
+  <rect x="70" y="92" width="300" height="56" rx="10" fill="#f2f5fb" stroke="#4A90D9" stroke-width="2"/>
+  <text x="220" y="118" text-anchor="middle" font-size="19" font-weight="bold" fill="#333">View (Razor)</text>
+  <text x="220" y="139" text-anchor="middle" font-size="15" fill="#555">sans état, rendue par le serveur</text>
+
+  <rect x="70" y="222" width="300" height="56" rx="10" fill="#4A90D9" stroke="#333" stroke-width="2"/>
+  <text x="220" y="248" text-anchor="middle" font-size="19" font-weight="bold" fill="#fff">Controller</text>
+  <text x="220" y="269" text-anchor="middle" font-size="15" fill="#fff">reçoit la requête, choisit la vue</text>
+
+  <rect x="70" y="352" width="300" height="56" rx="10" fill="#f2f2f2" stroke="#333" stroke-width="2"/>
+  <text x="220" y="378" text-anchor="middle" font-size="19" font-weight="bold" fill="#333">Model</text>
+  <text x="220" y="399" text-anchor="middle" font-size="15" fill="#555">domaine + ViewModel de page</text>
+
+  <line x1="100" y1="222" x2="100" y2="150" stroke="#333" stroke-width="2.5" marker-end="url(#fleche)"/>
+  <text x="118" y="190" font-size="15" fill="#333">rend avec le modèle</text>
+  <line x1="100" y1="278" x2="100" y2="350" stroke="#333" stroke-width="2.5" marker-end="url(#fleche)"/>
+  <text x="118" y="320" font-size="15" fill="#333">appelle les services</text>
+
+  <text x="220" y="450" text-anchor="middle" font-size="15" fill="#555">Entrée : requête HTTP → routing → action</text>
+  <text x="220" y="472" text-anchor="middle" font-size="15" fill="#555">Test : action appelée directement,</text>
+  <text x="220" y="492" text-anchor="middle" font-size="15" fill="#555">ou WebApplicationFactory</text>
+
+  <!-- ===== Colonne MVP ===== -->
+  <text x="600" y="78" text-anchor="middle" font-size="21" font-weight="bold" fill="#E67E22">MVP — WinForms (Trame)</text>
+  <rect x="450" y="92" width="300" height="56" rx="10" fill="#fdf5ec" stroke="#E67E22" stroke-width="2"/>
+  <text x="600" y="118" text-anchor="middle" font-size="19" font-weight="bold" fill="#333">View : IVueSaisie</text>
+  <text x="600" y="139" text-anchor="middle" font-size="15" fill="#555">le Form implémente une interface</text>
+
+  <rect x="450" y="222" width="300" height="56" rx="10" fill="#E67E22" stroke="#333" stroke-width="2"/>
+  <text x="600" y="248" text-anchor="middle" font-size="19" font-weight="bold" fill="#fff">Presenter</text>
+  <text x="600" y="269" text-anchor="middle" font-size="15" fill="#fff">pilote la vue, méthode par méthode</text>
+
+  <rect x="450" y="352" width="300" height="56" rx="10" fill="#f2f2f2" stroke="#333" stroke-width="2"/>
+  <text x="600" y="378" text-anchor="middle" font-size="19" font-weight="bold" fill="#333">Model</text>
+  <text x="600" y="399" text-anchor="middle" font-size="15" fill="#555">services métier, accès données</text>
+
+  <line x1="480" y1="150" x2="480" y2="220" stroke="#333" stroke-width="2.5" marker-end="url(#fleche)"/>
+  <text x="498" y="176" font-size="15" fill="#333">événements (clic, saisie)</text>
+  <line x1="720" y1="222" x2="720" y2="150" stroke="#333" stroke-width="2.5" marker-end="url(#fleche)"/>
+  <text x="702" y="200" text-anchor="end" font-size="15" fill="#333">vue.AfficherTotal(1 250 €)</text>
+  <line x1="480" y1="278" x2="480" y2="350" stroke="#333" stroke-width="2.5" marker-end="url(#fleche)"/>
+  <text x="498" y="320" font-size="15" fill="#333">appelle</text>
+
+  <text x="600" y="450" text-anchor="middle" font-size="15" fill="#555">Entrée : le Form délègue chaque handler</text>
+  <text x="600" y="472" text-anchor="middle" font-size="15" fill="#555">Test : Presenter + IVueSaisie simulée</text>
+  <text x="600" y="492" text-anchor="middle" font-size="15" fill="#555">(NSubstitute)</text>
+
+  <!-- ===== Colonne MVVM ===== -->
+  <text x="980" y="78" text-anchor="middle" font-size="21" font-weight="bold" fill="#8CC63F">MVVM — WPF, MAUI, Blazor</text>
+  <rect x="830" y="92" width="300" height="56" rx="10" fill="#eaf6da" stroke="#8CC63F" stroke-width="2"/>
+  <text x="980" y="118" text-anchor="middle" font-size="19" font-weight="bold" fill="#333">View (XAML, Razor)</text>
+  <text x="980" y="139" text-anchor="middle" font-size="15" fill="#555">déclarative, sans code-behind</text>
+
+  <rect x="830" y="222" width="300" height="56" rx="10" fill="#8CC63F" stroke="#333" stroke-width="2"/>
+  <text x="980" y="248" text-anchor="middle" font-size="19" font-weight="bold" fill="#fff">ViewModel</text>
+  <text x="980" y="269" text-anchor="middle" font-size="15" fill="#fff">propriétés observables + commandes</text>
+
+  <rect x="830" y="352" width="300" height="56" rx="10" fill="#f2f2f2" stroke="#333" stroke-width="2"/>
+  <text x="980" y="378" text-anchor="middle" font-size="19" font-weight="bold" fill="#333">Model</text>
+  <text x="980" y="399" text-anchor="middle" font-size="15" fill="#555">services métier, accès données</text>
+
+  <line x1="860" y1="150" x2="860" y2="220" stroke="#333" stroke-width="2.5" marker-end="url(#fleche)"/>
+  <text x="878" y="176" font-size="15" fill="#333">binding, ICommand.Execute</text>
+  <line x1="1100" y1="222" x2="1100" y2="150" stroke="#333" stroke-width="2.5" marker-end="url(#fleche)"/>
+  <text x="1082" y="200" text-anchor="end" font-size="15" fill="#333">PropertyChanged</text>
+  <line x1="860" y1="278" x2="860" y2="350" stroke="#333" stroke-width="2.5" marker-end="url(#fleche)"/>
+  <text x="878" y="320" font-size="15" fill="#333">appelle</text>
+
+  <text x="980" y="450" text-anchor="middle" font-size="15" fill="#555">Entrée : la vue ne connaît que le ViewModel</text>
+  <text x="980" y="472" text-anchor="middle" font-size="15" fill="#555">Test : ViewModel seul, sans vue ni UI thread</text>
+  <text x="980" y="492" text-anchor="middle" font-size="15" fill="#555">(CommunityToolkit.Mvvm)</text>
+
+  <text x="600" y="538" text-anchor="middle" font-size="17" fill="#555">Dans les trois cas, le Model ignore la présentation : c'est la couche métier de Trame 2 (module 1)</text>
+</svg>

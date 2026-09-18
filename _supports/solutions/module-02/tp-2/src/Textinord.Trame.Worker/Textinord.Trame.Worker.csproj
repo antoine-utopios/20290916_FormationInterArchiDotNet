@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <Description>Worker Trame 2 : rejoue le flux de commande hors HTTP (simulation de la journée d'un ADV).</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Textinord.Trame.Application\Textinord.Trame.Application.csproj" />
+    <ProjectReference Include="..\Textinord.Trame.Infrastructure\Textinord.Trame.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" />
+  </ItemGroup>
+
+</Project>

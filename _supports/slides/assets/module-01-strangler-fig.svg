@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="fleche" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#333"/>
+    </marker>
+  </defs>
+  <text x="600" y="34" text-anchor="middle" font-size="22" font-weight="bold" fill="#333">Strangler Fig : Trame reste en production, Trame 2 prend les fonctionnalités une à une</text>
+
+  <!-- Colonne 1 : aujourd'hui -->
+  <text x="215" y="70" text-anchor="middle" font-size="19" font-weight="bold" fill="#333">1. Aujourd'hui (2026)</text>
+  <rect x="40" y="88" width="350" height="56" rx="10" fill="#f2f2f2" stroke="#333" stroke-width="2"/>
+  <text x="215" y="112" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">Postes WinForms</text>
+  <text x="215" y="134" text-anchor="middle" font-size="14" fill="#555">ADV, achats, entrepôt — 180 000 lignes</text>
+  <line x1="215" y1="144" x2="215" y2="166" stroke="#333" stroke-width="2" marker-end="url(#fleche)"/>
+  <rect x="40" y="170" width="350" height="56" rx="10" fill="#f2f2f2" stroke="#333" stroke-width="2"/>
+  <text x="215" y="194" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">Services WCF sur IIS</text>
+  <text x="215" y="216" text-anchor="middle" font-size="14" fill="#555">contrats SOAP figés, clients non-.NET exclus</text>
+  <line x1="215" y1="226" x2="215" y2="248" stroke="#333" stroke-width="2" marker-end="url(#fleche)"/>
+  <rect x="40" y="252" width="350" height="56" rx="10" fill="#f2f2f2" stroke="#333" stroke-width="2"/>
+  <text x="215" y="276" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">SQL Server 2016</text>
+  <text x="215" y="298" text-anchor="middle" font-size="14" fill="#555">400 procédures stockées, triggers métier</text>
+  <rect x="40" y="334" width="350" height="44" rx="10" fill="#fdf5ec" stroke="#E67E22" stroke-width="2"/>
+  <text x="215" y="361" text-anchor="middle" font-size="14" fill="#333">MSMQ vers les entrepôts : pertes au reboot</text>
+
+  <!-- Colonne 2 : transition -->
+  <text x="600" y="70" text-anchor="middle" font-size="19" font-weight="bold" fill="#333">2. Transition (2026-2028)</text>
+  <rect x="425" y="88" width="350" height="56" rx="10" fill="#f2f2f2" stroke="#333" stroke-width="2"/>
+  <text x="600" y="110" text-anchor="middle" font-size="15" font-weight="bold" fill="#333">Postes WinForms restants,</text>
+  <text x="600" y="132" text-anchor="middle" font-size="15" font-weight="bold" fill="#333">extranet Blazor, application MAUI</text>
+  <line x1="600" y1="144" x2="600" y2="166" stroke="#333" stroke-width="2" marker-end="url(#fleche)"/>
+  <rect x="425" y="168" width="350" height="50" rx="10" fill="#4A90D9" stroke="#333" stroke-width="2"/>
+  <text x="600" y="189" text-anchor="middle" font-size="16" font-weight="bold" fill="#fff">YARP : reverse proxy</text>
+  <text x="600" y="209" text-anchor="middle" font-size="13" fill="#fff">route chaque fonctionnalité vers Trame ou Trame 2</text>
+  <line x1="507" y1="218" x2="507" y2="246" stroke="#333" stroke-width="2" marker-end="url(#fleche)"/>
+  <line x1="692" y1="218" x2="692" y2="246" stroke="#333" stroke-width="2" marker-end="url(#fleche)"/>
+  <rect x="425" y="248" width="165" height="60" rx="10" fill="#f2f2f2" stroke="#333" stroke-width="2"/>
+  <text x="507" y="272" text-anchor="middle" font-size="15" font-weight="bold" fill="#333">Trame (WCF)</text>
+  <text x="507" y="294" text-anchor="middle" font-size="13" fill="#555">tarifs, achats</text>
+  <rect x="610" y="248" width="165" height="60" rx="10" fill="#eaf6da" stroke="#8CC63F" stroke-width="2"/>
+  <text x="692" y="272" text-anchor="middle" font-size="15" font-weight="bold" fill="#333">Trame 2 (API)</text>
+  <text x="692" y="294" text-anchor="middle" font-size="13" fill="#555">commandes, préparation</text>
+  <line x1="692" y1="308" x2="692" y2="330" stroke="#333" stroke-width="2" marker-end="url(#fleche)"/>
+  <rect x="610" y="332" width="165" height="44" rx="10" fill="#fdf5ec" stroke="#E67E22" stroke-width="2"/>
+  <text x="692" y="350" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">ACL</text>
+  <text x="692" y="368" text-anchor="middle" font-size="13" fill="#555">couche anti-corruption</text>
+  <line x1="507" y1="308" x2="507" y2="398" stroke="#333" stroke-width="2" marker-end="url(#fleche)"/>
+  <line x1="692" y1="376" x2="692" y2="398" stroke="#333" stroke-width="2" marker-end="url(#fleche)"/>
+  <rect x="425" y="400" width="350" height="50" rx="10" fill="#f2f2f2" stroke="#333" stroke-width="2"/>
+  <text x="600" y="420" text-anchor="middle" font-size="15" font-weight="bold" fill="#333">SQL Server partagé</text>
+  <text x="600" y="440" text-anchor="middle" font-size="13" fill="#555">procédures stockées derrière l'ACL, puis migrées</text>
+
+  <!-- Colonne 3 : cible -->
+  <text x="985" y="70" text-anchor="middle" font-size="19" font-weight="bold" fill="#333">3. Cible (2028)</text>
+  <rect x="810" y="88" width="350" height="56" rx="10" fill="#f2f2f2" stroke="#333" stroke-width="2"/>
+  <text x="985" y="112" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">Clients</text>
+  <text x="985" y="134" text-anchor="middle" font-size="14" fill="#555">Blazor, MAUI, partenaires (OpenAPI)</text>
+  <line x1="985" y1="144" x2="985" y2="166" stroke="#333" stroke-width="2" marker-end="url(#fleche)"/>
+  <rect x="810" y="170" width="350" height="56" rx="10" fill="#eaf6da" stroke="#8CC63F" stroke-width="2"/>
+  <text x="985" y="194" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">API Trame 2 versionnée (v1, v2)</text>
+  <text x="985" y="216" text-anchor="middle" font-size="14" fill="#555">Minimal APIs, Azure Container Apps</text>
+  <line x1="985" y1="226" x2="985" y2="248" stroke="#333" stroke-width="2" marker-end="url(#fleche)"/>
+  <rect x="810" y="252" width="350" height="56" rx="10" fill="#eaf6da" stroke="#8CC63F" stroke-width="2"/>
+  <text x="985" y="276" text-anchor="middle" font-size="15" font-weight="bold" fill="#333">Azure SQL, Cosmos DB, Service Bus</text>
+  <text x="985" y="298" text-anchor="middle" font-size="14" fill="#555">Outbox, MassTransit, Redis</text>
+  <rect x="810" y="334" width="350" height="44" rx="10" fill="#fff" stroke="#999" stroke-width="2" stroke-dasharray="6,4"/>
+  <text x="985" y="361" text-anchor="middle" font-size="15" fill="#999" text-decoration="line-through">Trame, WCF, MSMQ : décommissionnés</text>
+
+  <!-- Frise -->
+  <line x1="40" y1="480" x2="1150" y2="480" stroke="#333" stroke-width="3" marker-end="url(#fleche)"/>
+  <circle cx="40" cy="480" r="5" fill="#333"/>
+  <circle cx="350" cy="480" r="5" fill="#8CC63F"/>
+  <circle cx="640" cy="480" r="5" fill="#8CC63F"/>
+  <circle cx="930" cy="480" r="5" fill="#8CC63F"/>
+  <text x="40" y="470" text-anchor="start" font-size="14" fill="#333">sept. 2026</text>
+  <text x="350" y="470" text-anchor="middle" font-size="14" fill="#333">T1 2027 : commandes</text>
+  <text x="640" y="470" text-anchor="middle" font-size="14" fill="#333">T3 2027 : préparation</text>
+  <text x="930" y="470" text-anchor="middle" font-size="14" fill="#333">T1 2028 : tarifs, achats</text>
+  <text x="600" y="508" text-anchor="middle" font-size="15" fill="#555">Une fonctionnalité à la fois, la plus coûteuse à maintenir d'abord ; Trame s'éteint quand le proxy ne lui route plus rien</text>
+  <text x="600" y="534" text-anchor="middle" font-size="15" fill="#555">Compatibilité 18 mois avec les postes WinForms restants : contrats d'API versionnés, ACL devant les procédures stockées</text>
+</svg>

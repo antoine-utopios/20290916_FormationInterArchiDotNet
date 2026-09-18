@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="fl" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 z" fill="#333"/>
+    </marker>
+    <marker id="flr" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 z" fill="#c0392b"/>
+    </marker>
+  </defs>
+  <text x="600" y="34" text-anchor="middle" font-size="26" font-weight="bold" fill="#333">Concurrence optimiste : le second à écrire perd, et il le sait</text>
+
+  <!-- Repères temporels -->
+  <text x="270" y="72" text-anchor="middle" font-size="16" font-weight="bold" fill="#555">1. Lecture</text>
+  <text x="520" y="72" text-anchor="middle" font-size="16" font-weight="bold" fill="#555">2. Sofia enregistre</text>
+  <text x="770" y="72" text-anchor="middle" font-size="16" font-weight="bold" fill="#555">3. L'extranet enregistre</text>
+  <text x="1020" y="72" text-anchor="middle" font-size="16" font-weight="bold" fill="#555">4. Résolution</text>
+  <line x1="150" y1="82" x2="1170" y2="82" stroke="#ccc" stroke-width="1.5"/>
+
+  <!-- Couloir Sofia -->
+  <rect x="20" y="96" width="120" height="80" rx="10" fill="#4A90D9" stroke="#333" stroke-width="2"/>
+  <text x="80" y="128" text-anchor="middle" font-size="16" font-weight="bold" fill="#fff">Sofia</text>
+  <text x="80" y="150" text-anchor="middle" font-size="14" fill="#fff">ADV, Trame 2</text>
+  <line x1="150" y1="136" x2="1170" y2="136" stroke="#e0e0e0" stroke-width="2"/>
+
+  <rect x="160" y="100" width="220" height="72" rx="8" fill="#f2f5fb" stroke="#4A90D9" stroke-width="2"/>
+  <text x="270" y="126" text-anchor="middle" font-size="15" fill="#333">charge la commande</text>
+  <text x="270" y="148" text-anchor="middle" font-size="15" font-weight="bold" fill="#333">Version = A</text>
+
+  <rect x="410" y="100" width="220" height="72" rx="8" fill="#f2f5fb" stroke="#4A90D9" stroke-width="2"/>
+  <text x="520" y="126" text-anchor="middle" font-size="15" fill="#333">commande.Valider()</text>
+  <text x="520" y="148" text-anchor="middle" font-size="15" fill="#333">puis SaveChangesAsync()</text>
+
+  <!-- Couloir Base -->
+  <rect x="20" y="236" width="120" height="100" rx="10" fill="#333" stroke="#333" stroke-width="2"/>
+  <text x="80" y="278" text-anchor="middle" font-size="16" font-weight="bold" fill="#fff">Base</text>
+  <text x="80" y="300" text-anchor="middle" font-size="14" fill="#fff">table Commandes</text>
+  <line x1="150" y1="286" x2="1170" y2="286" stroke="#e0e0e0" stroke-width="2"/>
+
+  <rect x="160" y="250" width="220" height="72" rx="8" fill="#f2f2f2" stroke="#333" stroke-width="2"/>
+  <text x="270" y="276" text-anchor="middle" font-size="15" fill="#333">Id 42, Statut Brouillon</text>
+  <text x="270" y="298" text-anchor="middle" font-size="15" font-weight="bold" fill="#333">Version = A</text>
+
+  <rect x="410" y="236" width="220" height="100" rx="8" fill="#eaf6da" stroke="#8CC63F" stroke-width="2"/>
+  <text x="520" y="258" text-anchor="middle" font-size="14" fill="#333">UPDATE Commandes SET</text>
+  <text x="520" y="277" text-anchor="middle" font-size="14" fill="#333">Statut='Validee', Version=B</text>
+  <text x="520" y="296" text-anchor="middle" font-size="14" fill="#333">WHERE Id=42 AND Version=A</text>
+  <text x="520" y="322" text-anchor="middle" font-size="15" font-weight="bold" fill="#5a8a1a">1 ligne modifiée : succès</text>
+
+  <rect x="660" y="236" width="220" height="100" rx="8" fill="#fdecea" stroke="#c0392b" stroke-width="2"/>
+  <text x="770" y="258" text-anchor="middle" font-size="14" fill="#333">UPDATE Commandes SET</text>
+  <text x="770" y="277" text-anchor="middle" font-size="14" fill="#333">Statut='Annulee', Version=C</text>
+  <text x="770" y="296" text-anchor="middle" font-size="14" fill="#333">WHERE Id=42 AND Version=A</text>
+  <text x="770" y="322" text-anchor="middle" font-size="15" font-weight="bold" fill="#c0392b">0 ligne : conflit détecté</text>
+
+  <rect x="910" y="250" width="220" height="72" rx="8" fill="#f2f2f2" stroke="#333" stroke-width="2"/>
+  <text x="1020" y="276" text-anchor="middle" font-size="15" fill="#333">Id 42, Statut Validee</text>
+  <text x="1020" y="298" text-anchor="middle" font-size="15" font-weight="bold" fill="#333">Version = B (inchangée)</text>
+
+  <!-- Couloir Extranet -->
+  <rect x="20" y="396" width="120" height="80" rx="10" fill="#E67E22" stroke="#333" stroke-width="2"/>
+  <text x="80" y="428" text-anchor="middle" font-size="16" font-weight="bold" fill="#fff">Client</text>
+  <text x="80" y="450" text-anchor="middle" font-size="14" fill="#fff">extranet Blazor</text>
+  <line x1="150" y1="436" x2="1170" y2="436" stroke="#e0e0e0" stroke-width="2"/>
+
+  <rect x="160" y="400" width="220" height="72" rx="8" fill="#fdf5ec" stroke="#E67E22" stroke-width="2"/>
+  <text x="270" y="426" text-anchor="middle" font-size="15" fill="#333">charge la même commande</text>
+  <text x="270" y="448" text-anchor="middle" font-size="15" font-weight="bold" fill="#333">Version = A</text>
+
+  <rect x="660" y="400" width="220" height="72" rx="8" fill="#fdf5ec" stroke="#E67E22" stroke-width="2"/>
+  <text x="770" y="426" text-anchor="middle" font-size="15" fill="#333">commande.Annuler()</text>
+  <text x="770" y="448" text-anchor="middle" font-size="15" fill="#333">puis SaveChangesAsync()</text>
+
+  <rect x="900" y="386" width="240" height="100" rx="8" fill="#fdecea" stroke="#c0392b" stroke-width="2"/>
+  <text x="1020" y="410" text-anchor="middle" font-size="15" font-weight="bold" fill="#c0392b">DbUpdateConcurrencyException</text>
+  <text x="1020" y="434" text-anchor="middle" font-size="14" fill="#333">Reload() : la base a raison,</text>
+  <text x="1020" y="454" text-anchor="middle" font-size="14" fill="#333">rejouer la règle métier,</text>
+  <text x="1020" y="474" text-anchor="middle" font-size="14" fill="#333">ou demander à l'utilisateur</text>
+
+  <!-- Flèches verticales -->
+  <line x1="270" y1="250" x2="270" y2="174" stroke="#333" stroke-width="2.5" marker-end="url(#fl)"/>
+  <line x1="270" y1="322" x2="270" y2="398" stroke="#333" stroke-width="2.5" marker-end="url(#fl)"/>
+  <line x1="520" y1="172" x2="520" y2="234" stroke="#333" stroke-width="2.5" marker-end="url(#fl)"/>
+  <line x1="770" y1="400" x2="770" y2="338" stroke="#333" stroke-width="2.5" marker-end="url(#fl)"/>
+  <line x1="880" y1="300" x2="908" y2="300" stroke="#333" stroke-width="2.5" marker-end="url(#fl)"/>
+  <line x1="880" y1="436" x2="908" y2="436" stroke="#c0392b" stroke-width="2.5" marker-end="url(#flr)"/>
+
+  <text x="600" y="520" text-anchor="middle" font-size="18" fill="#555">Aucun verrou tenu entre la lecture et l'écriture : la colonne de version (rowversion SQL Server,</text>
+  <text x="600" y="545" text-anchor="middle" font-size="18" fill="#555">ou Guid géré par l'application) suffit. EF Core ajoute la clause WHERE et compte les lignes touchées.</text>
+</svg>

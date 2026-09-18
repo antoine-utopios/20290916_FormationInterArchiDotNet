@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Noyau métier : aucune dépendance technique, aucun package. -->
+  <PropertyGroup>
+    <Description>Noyau métier de Trame 2 : commandes, lignes, règles de remise, événements.</Description>
+  </PropertyGroup>
+</Project>

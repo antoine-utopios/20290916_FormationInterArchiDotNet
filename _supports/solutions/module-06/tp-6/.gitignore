@@ -1,0 +1,23 @@
+# Sorties de build .NET
+bin/
+obj/
+*.user
+*.suo
+.vs/
+TestResults/
+publish/
+artifacts/
+*.trx
+coverage*.xml
+coverage*.json
+
+# Base SQLite locale de développement
+data/
+*.db
+*.db-wal
+*.db-shm
+
+# Outils
+.idea/
+.vscode/
+.DS_Store

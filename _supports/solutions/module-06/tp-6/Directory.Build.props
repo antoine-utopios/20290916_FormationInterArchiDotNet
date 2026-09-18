@@ -1,0 +1,31 @@
+<Project>
+  <!--
+    Propriétés communes à tous les projets de Trame 2 (src/ et tests/).
+    Un seul endroit pour la cible, le langage, la rigueur et l'identité de l'assembly :
+    aucun .csproj ne les répète.
+  -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Deterministic>true</Deterministic>
+    <!-- Build reproductible sur les agents CI (chemins normalisés dans le PDB). -->
+    <ContinuousIntegrationBuild Condition="'$(TF_BUILD)' == 'true' or '$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
+    <Company>Textinord</Company>
+    <Product>Trame 2</Product>
+    <Authors>Équipe Trame 2 — Textinord, Roubaix</Authors>
+    <Copyright>© Textinord 2026</Copyright>
+    <!-- Central Package Management : les versions vivent dans Directory.Packages.props. -->
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+
+  <!--
+    Nerdbank.GitVersioning calcule la version SemVer de chaque assembly à partir de
+    version.json et de la hauteur Git (nombre de commits depuis le dernier changement
+    de version). Hors dépôt Git, la version de base de version.json est utilisée telle quelle.
+  -->
+  <ItemGroup>
+    <PackageReference Include="Nerdbank.GitVersioning" PrivateAssets="all" />
+  </ItemGroup>
+</Project>

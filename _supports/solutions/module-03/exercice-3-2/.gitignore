@@ -1,0 +1,8 @@
+# Sorties de build .NET
+bin/
+obj/
+*.user
+*.suo
+.vs/
+TestResults/
+*.binlog

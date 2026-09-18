@@ -1,0 +1,103 @@
+@page "/commande"
+@inject PanierService Panier
+@inject ICommandeService Commandes
+@inject NavigationManager Navigation
+
+<PageTitle>Passer commande - Textinord</PageTitle>
+
+<h1>Passer commande</h1>
+
+@if (Panier.EstVide)
+{
+    <div class="alert alert-warning" role="alert">
+        Votre panier est vide : ajoutez des articles depuis le <a href="catalogue">catalogue</a> avant de commander.
+    </div>
+}
+else
+{
+    <div class="row g-4">
+        <div class="col-lg-7">
+            <EditForm Model="saisie" OnValidSubmit="ValiderAsync" FormName="commande">
+                <DataAnnotationsValidator />
+                <ValidationSummary class="alert alert-danger py-2" />
+
+                <div class="mb-3">
+                    <label for="referenceClient" class="form-label">Votre référence de commande</label>
+                    <InputText id="referenceClient" class="form-control" @bind-Value="saisie.ReferenceClient" />
+                    <ValidationMessage For="() => saisie.ReferenceClient" />
+                </div>
+
+                <div class="mb-3">
+                    <label for="adresse" class="form-label">Adresse de livraison</label>
+                    <InputText id="adresse" class="form-control" @bind-Value="saisie.AdresseLivraison" />
+                    <ValidationMessage For="() => saisie.AdresseLivraison" />
+                </div>
+
+                <div class="row g-2 mb-3">
+                    <div class="col-md-4">
+                        <label for="codePostal" class="form-label">Code postal</label>
+                        <InputText id="codePostal" class="form-control" @bind-Value="saisie.CodePostal" />
+                        <ValidationMessage For="() => saisie.CodePostal" />
+                    </div>
+                    <div class="col-md-8">
+                        <label for="ville" class="form-label">Ville</label>
+                        <InputText id="ville" class="form-control" @bind-Value="saisie.Ville" />
+                        <ValidationMessage For="() => saisie.Ville" />
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="dateLivraison" class="form-label">Date de livraison souhaitée</label>
+                    <InputDate id="dateLivraison" class="form-control" @bind-Value="saisie.DateLivraisonSouhaitee" />
+                    <ValidationMessage For="() => saisie.DateLivraisonSouhaitee" />
+                </div>
+
+                <div class="mb-3">
+                    <label for="commentaire" class="form-label">Commentaire pour la préparation</label>
+                    <InputTextArea id="commentaire" class="form-control" rows="3" @bind-Value="saisie.Commentaire" />
+                    <ValidationMessage For="() => saisie.Commentaire" />
+                </div>
+
+                <div class="form-check mb-3">
+                    <InputCheckbox id="cgv" class="form-check-input" @bind-Value="saisie.AccepteCgv" />
+                    <label for="cgv" class="form-check-label">J'accepte les conditions générales de vente Textinord</label>
+                    <ValidationMessage For="() => saisie.AccepteCgv" />
+                </div>
+
+                <button type="submit" class="btn btn-primary" disabled="@enCours">
+                    @(enCours ? "Enregistrement..." : "Confirmer la commande")
+                </button>
+            </EditForm>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Récapitulatif</h5>
+                    <p class="text-muted">@Panier.Lignes.Count ligne(s), @Panier.NombrePieces pièce(s)</p>
+                    <RecapitulatifPanier TotalBrut="Panier.TotalBrut" TotalRemise="Panier.TotalRemise" TotalNet="Panier.TotalNet" />
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private readonly CommandeSaisie saisie = new();
+    private bool enCours;
+
+    private async Task ValiderAsync()
+    {
+        enCours = true;
+        try
+        {
+            var commande = await Commandes.PasserAsync(saisie, Panier.Client, Panier.Lignes);
+            Panier.Vider();
+            Navigation.NavigateTo($"/confirmation/{commande.Numero}");
+        }
+        finally
+        {
+            enCours = false;
+        }
+    }
+}

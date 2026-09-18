@@ -1,0 +1,317 @@
+# =============================================================================
+# Pipeline CI/CD de Trame 2 — Textinord (Azure DevOps, YAML multi-étapes)
+#
+# Build ──▶ Test ──▶ Publish ──▶ Deploy_Recette ──▶ Deploy_Production
+#                                 (automatique)      (approbation manuelle sur
+#                                                     l'environnement, branches release/*)
+#
+# Ce fichier vit dans le dépôt : chaque changement du pipeline est revu comme du code.
+# Les secrets (identifiants Azure, registre) ne sont jamais ici : ils sont portés par
+# la service connection « textinord-azure » et le groupe de variables « trame2-secrets ».
+# =============================================================================
+
+trigger:
+  branches:
+    include:
+      - main
+      - release/*
+  paths:
+    exclude:
+      - docs/*
+      - CHANGELOG.md
+
+pr:
+  branches:
+    include:
+      - main
+
+variables:
+  - group: trame2-secrets            # ACR_NAME, RESOURCE_GROUP… définis dans Library
+  - name: buildConfiguration
+    value: Release
+  - name: dotnetVersion
+    value: 10.0.x
+  - name: DOTNET_CLI_TELEMETRY_OPTOUT
+    value: 1
+  - name: DOTNET_NOLOGO
+    value: 1
+  - name: NUGET_PACKAGES
+    value: $(Pipeline.Workspace)/.nuget/packages
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+  # ---------------------------------------------------------------------------
+  # 1. Compilation : restauration, build en Release, warnings = erreurs.
+  # ---------------------------------------------------------------------------
+  - stage: Build
+    displayName: Compilation
+    jobs:
+      - job: Build
+        displayName: dotnet build
+        steps:
+          - checkout: self
+            fetchDepth: 0            # historique complet : Nerdbank.GitVersioning calcule la hauteur Git
+
+          - task: UseDotNet@2
+            displayName: SDK .NET $(dotnetVersion)
+            inputs:
+              packageType: sdk
+              version: $(dotnetVersion)
+
+          - task: Cache@2
+            displayName: Cache NuGet
+            inputs:
+              key: 'nuget | "$(Agent.OS)" | **/Directory.Packages.props'
+              restoreKeys: |
+                nuget | "$(Agent.OS)"
+              path: $(NUGET_PACKAGES)
+
+          - script: |
+              dotnet tool install --global nbgv
+              nbgv cloud
+            displayName: Numéro de build = version SemVer (nbgv cloud)
+
+          - task: DotNetCoreCLI@2
+            displayName: dotnet restore
+            inputs:
+              command: restore
+              projects: '**/*.sln'
+
+          - task: DotNetCoreCLI@2
+            displayName: dotnet build
+            inputs:
+              command: build
+              projects: '**/*.sln'
+              arguments: --no-restore --configuration $(buildConfiguration)
+
+  # ---------------------------------------------------------------------------
+  # 2. Tests : unitaires + intégration, résultats TRX et couverture publiés
+  #    dans l'onglet Tests / Code Coverage de l'exécution.
+  # ---------------------------------------------------------------------------
+  - stage: Test
+    displayName: Tests
+    dependsOn: Build
+    jobs:
+      - job: Tests
+        displayName: dotnet test
+        steps:
+          - checkout: self
+            fetchDepth: 0
+
+          - task: UseDotNet@2
+            inputs:
+              packageType: sdk
+              version: $(dotnetVersion)
+
+          - task: Cache@2
+            inputs:
+              key: 'nuget | "$(Agent.OS)" | **/Directory.Packages.props'
+              path: $(NUGET_PACKAGES)
+
+          - task: DotNetCoreCLI@2
+            displayName: Tests unitaires et d'intégration
+            inputs:
+              command: test
+              projects: 'tests/**/*.csproj'
+              arguments: >-
+                --configuration $(buildConfiguration)
+                --logger trx
+                --collect:"XPlat Code Coverage"
+                --results-directory $(Agent.TempDirectory)/TestResults
+              publishTestResults: true      # la tâche publie les .trx automatiquement
+
+          - task: PublishCodeCoverageResults@2
+            displayName: Publication de la couverture
+            inputs:
+              summaryFileLocation: $(Agent.TempDirectory)/TestResults/**/coverage.cobertura.xml
+
+  # ---------------------------------------------------------------------------
+  # 3. Publication : artefacts (API + Worker) et images conteneur poussées
+  #    vers Azure Container Registry. Pas de publication sur une pull request.
+  # ---------------------------------------------------------------------------
+  - stage: Publish
+    displayName: Publication
+    dependsOn: Test
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+    jobs:
+      - job: Publish
+        displayName: dotnet publish + images
+        steps:
+          - checkout: self
+            fetchDepth: 0
+
+          - task: UseDotNet@2
+            inputs:
+              packageType: sdk
+              version: $(dotnetVersion)
+
+          - task: DotNetCoreCLI@2
+            displayName: Publication de l'API
+            inputs:
+              command: publish
+              publishWebProjects: false
+              projects: src/Textinord.Trame.Api/Textinord.Trame.Api.csproj
+              arguments: --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/api
+              zipAfterPublish: true
+
+          - task: DotNetCoreCLI@2
+            displayName: Publication du Worker
+            inputs:
+              command: publish
+              publishWebProjects: false
+              projects: src/Textinord.Trame.Worker/Textinord.Trame.Worker.csproj
+              arguments: --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/worker
+              zipAfterPublish: true
+
+          - task: CopyFiles@2
+            displayName: Notes de release jointes à l'artefact
+            inputs:
+              contents: CHANGELOG.md
+              targetFolder: $(Build.ArtifactStagingDirectory)
+
+          - task: PublishPipelineArtifact@1
+            displayName: Artefact trame2
+            inputs:
+              targetPath: $(Build.ArtifactStagingDirectory)
+              artifact: trame2
+
+          - task: Docker@2
+            displayName: Connexion au registre
+            inputs:
+              command: login
+              containerRegistry: textinord-acr     # service connection Docker Registry
+
+          - script: |
+              dotnet publish src/Textinord.Trame.Api/Textinord.Trame.Api.csproj \
+                --configuration $(buildConfiguration) -t:PublishContainer \
+                -p:ContainerRegistry=$(ACR_NAME).azurecr.io \
+                -p:ContainerRepository=trame2/api \
+                -p:ContainerImageTags='"$(Build.BuildNumber);latest"'
+              dotnet publish src/Textinord.Trame.Worker/Textinord.Trame.Worker.csproj \
+                --configuration $(buildConfiguration) -t:PublishContainer \
+                -p:ContainerRegistry=$(ACR_NAME).azurecr.io \
+                -p:ContainerRepository=trame2/worker \
+                -p:ContainerImageTags='"$(Build.BuildNumber);latest"'
+            displayName: Images conteneur (dotnet publish /t:PublishContainer, sans Dockerfile)
+
+  # ---------------------------------------------------------------------------
+  # 4. Recette : déploiement automatique sur main et release/*.
+  #    L'environnement « trame2-recette » trace qui a déployé quoi et quand.
+  # ---------------------------------------------------------------------------
+  - stage: Deploy_Recette
+    displayName: Déploiement en recette
+    dependsOn: Publish
+    condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), startsWith(variables['Build.SourceBranch'], 'refs/heads/release/')))
+    jobs:
+      - deployment: Recette
+        displayName: Container Apps — recette
+        environment: trame2-recette
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - download: current
+                  artifact: trame2
+
+                - task: AzureContainerApps@1
+                  displayName: API → trame2-api-recette
+                  inputs:
+                    azureSubscription: textinord-azure
+                    resourceGroup: $(RESOURCE_GROUP_RECETTE)
+                    containerAppName: trame2-api-recette
+                    imageToDeploy: $(ACR_NAME).azurecr.io/trame2/api:$(Build.BuildNumber)
+
+                - task: AzureContainerApps@1
+                  displayName: Worker → trame2-worker-recette
+                  inputs:
+                    azureSubscription: textinord-azure
+                    resourceGroup: $(RESOURCE_GROUP_RECETTE)
+                    containerAppName: trame2-worker-recette
+                    imageToDeploy: $(ACR_NAME).azurecr.io/trame2/worker:$(Build.BuildNumber)
+
+                - script: |
+                    curl --fail --silent --show-error https://trame2-api-recette.textinord.fr/openapi/v1.json > /dev/null
+                  displayName: Test de fumée (OpenAPI accessible)
+
+  # ---------------------------------------------------------------------------
+  # 5. Production : uniquement depuis une branche release/vX.Y, après approbation.
+  #    L'approbation est configurée sur l'environnement « trame2-production »
+  #    (Pipelines > Environments > Approvals and checks) : Awa Diop et Sofia Marques.
+  #    Stratégie canary sur les révisions Container Apps : 10 % du trafic, contrôle, 100 %.
+  # ---------------------------------------------------------------------------
+  - stage: Deploy_Production
+    displayName: Déploiement en production
+    dependsOn: Deploy_Recette
+    condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/release/'))
+    jobs:
+      - deployment: Production
+        displayName: Container Apps — production (canary)
+        environment: trame2-production
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - task: AzureContainerApps@1
+                  displayName: Nouvelle révision de l'API (sans trafic)
+                  inputs:
+                    azureSubscription: textinord-azure
+                    resourceGroup: $(RESOURCE_GROUP_PROD)
+                    containerAppName: trame2-api
+                    imageToDeploy: $(ACR_NAME).azurecr.io/trame2/api:$(Build.BuildNumber)
+
+                - task: AzureContainerApps@1
+                  displayName: Nouvelle révision du Worker
+                  inputs:
+                    azureSubscription: textinord-azure
+                    resourceGroup: $(RESOURCE_GROUP_PROD)
+                    containerAppName: trame2-worker
+                    imageToDeploy: $(ACR_NAME).azurecr.io/trame2/worker:$(Build.BuildNumber)
+
+            routeTraffic:
+              steps:
+                - task: AzureCLI@2
+                  displayName: Canary — 10 % du trafic sur la nouvelle révision
+                  inputs:
+                    azureSubscription: textinord-azure
+                    scriptType: bash
+                    scriptLocation: inlineScript
+                    inlineScript: |
+                      az containerapp ingress traffic set \
+                        --name trame2-api --resource-group $(RESOURCE_GROUP_PROD) \
+                        --label-weight nouvelle=10 stable=90
+
+            postRouteTraffic:
+              steps:
+                - script: |
+                    for i in $(seq 1 10); do
+                      curl --fail --silent https://trame2-api.textinord.fr/openapi/v1.json > /dev/null || exit 1
+                      sleep 30
+                    done
+                  displayName: Surveillance 5 minutes (erreurs 5xx = échec)
+
+                - task: AzureCLI@2
+                  displayName: Bascule à 100 %
+                  inputs:
+                    azureSubscription: textinord-azure
+                    scriptType: bash
+                    scriptLocation: inlineScript
+                    inlineScript: |
+                      az containerapp ingress traffic set \
+                        --name trame2-api --resource-group $(RESOURCE_GROUP_PROD) \
+                        --label-weight nouvelle=100 stable=0
+
+            on:
+              failure:
+                steps:
+                  - task: AzureCLI@2
+                    displayName: Rollback — tout le trafic sur la révision stable
+                    inputs:
+                      azureSubscription: textinord-azure
+                      scriptType: bash
+                      scriptLocation: inlineScript
+                      inlineScript: |
+                        az containerapp ingress traffic set \
+                          --name trame2-api --resource-group $(RESOURCE_GROUP_PROD) \
+                          --label-weight stable=100 nouvelle=0

@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="f" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555"/>
+    </marker>
+  </defs>
+  <text x="600" y="34" text-anchor="middle" font-size="25" font-weight="bold" fill="#333">La pyramide des tests Trame 2 : nombreux et rapides en bas, rares et lents en haut</text>
+
+  <!-- Axe gauche -->
+  <line x1="70" y1="480" x2="70" y2="110" stroke="#555" stroke-width="2" marker-end="url(#f)"/>
+  <text x="52" y="300" text-anchor="middle" font-size="14" fill="#555" transform="rotate(-90 52 300)">plus lent, plus coûteux, plus fragile</text>
+
+  <!-- Niveau 4 : exploratoire -->
+  <polygon points="345,110 495,110 520,200 320,200" fill="#fdf5ec" stroke="#E67E22" stroke-width="2"/>
+  <text x="420" y="145" text-anchor="middle" font-size="17" font-weight="bold" fill="#333">Exploratoire</text>
+  <text x="420" y="170" text-anchor="middle" font-size="14" fill="#555">Azure Test Plans</text>
+  <text x="420" y="190" text-anchor="middle" font-size="14" fill="#555">manuel, scénarisé</text>
+
+  <!-- Niveau 3 : validation -->
+  <polygon points="320,208 520,208 560,298 280,298" fill="#f2f5fb" stroke="#4A90D9" stroke-width="2"/>
+  <text x="420" y="238" text-anchor="middle" font-size="17" font-weight="bold" fill="#333">Validation — 10 %</text>
+  <text x="420" y="262" text-anchor="middle" font-size="14" fill="#555">Playwright : parcours extranet</text>
+  <text x="420" y="282" text-anchor="middle" font-size="14" fill="#555">Reqnroll : recette métier en Gherkin</text>
+
+  <!-- Niveau 2 : intégration -->
+  <polygon points="280,306 560,306 610,396 230,396" fill="#f2f5fb" stroke="#4A90D9" stroke-width="2"/>
+  <text x="420" y="336" text-anchor="middle" font-size="17" font-weight="bold" fill="#333">Intégration — 20 %</text>
+  <text x="420" y="360" text-anchor="middle" font-size="14" fill="#555">WebApplicationFactory, SQLite en mémoire</text>
+  <text x="420" y="380" text-anchor="middle" font-size="14" fill="#555">test harness MassTransit, Testcontainers si Docker</text>
+
+  <!-- Niveau 1 : unitaires -->
+  <polygon points="230,404 610,404 660,494 180,494" fill="#eaf6da" stroke="#8CC63F" stroke-width="2.5"/>
+  <text x="420" y="434" text-anchor="middle" font-size="17" font-weight="bold" fill="#333">Unitaires — 70 %</text>
+  <text x="420" y="458" text-anchor="middle" font-size="14" fill="#555">xUnit, NSubstitute, Bogus : Domain, règles de remise</text>
+  <text x="420" y="478" text-anchor="middle" font-size="14" fill="#555">quelques millisecondes, aucune dépendance</text>
+
+  <!-- Annotations droite -->
+  <text x="700" y="140" font-size="16" font-weight="bold" fill="#333">Ce que chaque niveau prouve</text>
+  <line x1="700" y1="150" x2="1170" y2="150" stroke="#333" stroke-width="1"/>
+
+  <text x="700" y="182" font-size="15" font-weight="bold" fill="#E67E22">Exploratoire</text>
+  <text x="700" y="203" font-size="15" fill="#555">Awa Diop et Marc Vandewalle testent le scanner</text>
+  <text x="700" y="223" font-size="15" fill="#555">avant chaque release ; ce qu'aucun script ne prévoit</text>
+
+  <text x="700" y="258" font-size="15" font-weight="bold" fill="#4A90D9">Validation</text>
+  <text x="700" y="279" font-size="15" fill="#555">le parcours complet : panier → commande → ordre</text>
+  <text x="700" y="299" font-size="15" fill="#555">de préparation, sur l'environnement de recette</text>
+
+  <text x="700" y="334" font-size="15" font-weight="bold" fill="#4A90D9">Intégration</text>
+  <text x="700" y="355" font-size="15" fill="#555">l'API + EF Core + Outbox ensemble, en mémoire :</text>
+  <text x="700" y="375" font-size="15" fill="#555">POST /commandes écrit bien la ligne Outbox</text>
+
+  <text x="700" y="410" font-size="15" font-weight="bold" fill="#8CC63F">Unitaires</text>
+  <text x="700" y="431" font-size="15" fill="#555">une règle, une classe, un test : remise 25 % + 5 %</text>
+  <text x="700" y="451" font-size="15" fill="#555">plafonnée à 30 %, statut EnAttenteStock, numéro</text>
+  <text x="700" y="471" font-size="15" fill="#555">CMD-2026-000042 ; le bus et le stock sont substitués</text>
+
+  <text x="600" y="532" text-anchor="middle" font-size="18" fill="#555">Règle Textinord : un bug corrigé = un test unitaire ajouté ; un incident de production = un test d'intégration ajouté.</text>
+</svg>

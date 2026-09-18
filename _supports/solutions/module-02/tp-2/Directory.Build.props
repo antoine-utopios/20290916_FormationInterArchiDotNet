@@ -1,0 +1,45 @@
+<Project>
+
+  <!--
+    Propriétés communes à tous les projets de la solution Trame 2.
+    Un projet ne redéfinit ces valeurs que s'il a une raison documentée.
+    C# 14 est la version par défaut du SDK .NET 10 : inutile de fixer LangVersion.
+  -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>latest-recommended</AnalysisLevel>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <Deterministic>true</Deterministic>
+    <ContinuousIntegrationBuild Condition="'$(TF_BUILD)' == 'true' or '$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
+  </PropertyGroup>
+
+  <!-- Identité des assemblies : nom d'assembly = namespace racine = nom du projet. -->
+  <PropertyGroup>
+    <Company>Textinord</Company>
+    <Product>Trame 2</Product>
+    <Authors>Équipe Trame 2</Authors>
+    <Copyright>Textinord, Roubaix</Copyright>
+    <Version>0.2.0</Version>
+    <RootNamespace>$(MSBuildProjectName)</RootNamespace>
+    <AssemblyName>$(MSBuildProjectName)</AssemblyName>
+  </PropertyGroup>
+
+  <!-- Tout projet dont le nom finit par .Tests est un projet xUnit, sans rien répéter dans son .csproj. -->
+  <PropertyGroup Condition="$(MSBuildProjectName.EndsWith('.Tests'))">
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup Condition="$(MSBuildProjectName.EndsWith('.Tests'))">
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" />
+    <PackageReference Include="coverlet.collector" />
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+</Project>

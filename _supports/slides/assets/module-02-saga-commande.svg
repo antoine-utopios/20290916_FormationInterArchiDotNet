@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="fleche" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#333"/>
+    </marker>
+    <marker id="flecheBleu" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4A90D9"/>
+    </marker>
+    <marker id="flecheOrange" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#E67E22"/>
+    </marker>
+  </defs>
+
+  <text x="600" y="36" text-anchor="middle" font-size="26" font-weight="bold" fill="#333">Process Manager : la saga « expédition » orchestre les ordres de préparation</text>
+
+  <!-- Colonne gauche -->
+  <rect x="60" y="100" width="270" height="64" rx="10" fill="#333"/>
+  <text x="195" y="127" text-anchor="middle" font-size="17" font-weight="bold" fill="#fff">CommandeValidee</text>
+  <text x="195" y="150" text-anchor="middle" font-size="14" fill="#fff">corrélation : CMD-2026-001042</text>
+  <line x1="330" y1="132" x2="438" y2="132" stroke="#333" stroke-width="2.5" marker-end="url(#fleche)"/>
+  <circle cx="384" cy="115" r="12" fill="#333"/>
+  <text x="384" y="120" text-anchor="middle" font-size="14" font-weight="bold" fill="#fff">1</text>
+
+  <rect x="60" y="200" width="270" height="90" rx="10" fill="#fdf5ec" stroke="#E67E22" stroke-width="2"/>
+  <text x="195" y="227" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">CommandeAnnulee</text>
+  <text x="195" y="250" text-anchor="middle" font-size="14" fill="#555">reçue avant la fin de la préparation :</text>
+  <text x="195" y="272" text-anchor="middle" font-size="14" fill="#555">la saga compense (AnnulerOrdre)</text>
+  <line x1="330" y1="245" x2="438" y2="245" stroke="#E67E22" stroke-width="2.5" stroke-dasharray="7,5" marker-end="url(#flecheOrange)"/>
+
+  <rect x="60" y="340" width="270" height="70" rx="10" fill="#eaf6da" stroke="#8CC63F" stroke-width="2"/>
+  <text x="195" y="368" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">CommandeExpediee</text>
+  <text x="195" y="392" text-anchor="middle" font-size="14" fill="#555">→ facturation, notification client</text>
+  <line x1="440" y1="375" x2="332" y2="375" stroke="#333" stroke-width="2.5" marker-end="url(#fleche)"/>
+  <circle cx="384" cy="358" r="12" fill="#333"/>
+  <text x="384" y="363" text-anchor="middle" font-size="14" font-weight="bold" fill="#fff">4</text>
+
+  <!-- Saga -->
+  <rect x="440" y="100" width="280" height="330" rx="12" fill="#f2f5fb" stroke="#4A90D9" stroke-width="3"/>
+  <text x="580" y="130" text-anchor="middle" font-size="20" font-weight="bold" fill="#4A90D9">Saga Expédition</text>
+  <text x="580" y="152" text-anchor="middle" font-size="14" fill="#555">un état persisté par commande</text>
+  <line x1="460" y1="168" x2="700" y2="168" stroke="#4A90D9" stroke-width="1.5"/>
+  <text x="460" y="195" font-size="15" font-weight="bold" fill="#333">État :</text>
+  <text x="460" y="220" font-size="15" fill="#333">ordres attendus : RBX, LSQ</text>
+  <text x="460" y="245" font-size="15" fill="#333">ordres clos : 0/2 → 1/2 → 2/2</text>
+  <text x="460" y="285" font-size="15" font-weight="bold" fill="#333">Règles :</text>
+  <text x="460" y="310" font-size="15" fill="#333">2/2 clos → CommandeExpediee</text>
+  <text x="460" y="335" font-size="15" fill="#333">annulation → AnnulerOrdre</text>
+  <text x="460" y="360" font-size="15" fill="#333">silence 48 h → alerte entrepôt</text>
+  <text x="460" y="400" font-size="14" fill="#555">Corrélation = numéro de commande :</text>
+  <text x="460" y="420" font-size="14" fill="#555">c'est elle qui retrouve l'instance.</text>
+
+  <!-- Entrepôts -->
+  <rect x="880" y="100" width="260" height="110" rx="10" fill="#f2f2f2" stroke="#333" stroke-width="2"/>
+  <text x="1010" y="130" text-anchor="middle" font-size="17" font-weight="bold" fill="#333">Entrepôt Roubaix</text>
+  <text x="1010" y="155" text-anchor="middle" font-size="14" fill="#555">prépare, puis répond</text>
+  <text x="1010" y="177" text-anchor="middle" font-size="14" fill="#555">sans connaître Lesquin</text>
+  <line x1="720" y1="140" x2="878" y2="140" stroke="#333" stroke-width="2.5" marker-end="url(#fleche)"/>
+  <text x="800" y="132" text-anchor="middle" font-size="14" fill="#333">2 · PreparerCommande</text>
+  <line x1="880" y1="190" x2="722" y2="190" stroke="#4A90D9" stroke-width="2.5" stroke-dasharray="7,5" marker-end="url(#flecheBleu)"/>
+  <text x="800" y="208" text-anchor="middle" font-size="14" fill="#4A90D9">3 · OrdreClos (RBX)</text>
+
+  <rect x="880" y="320" width="260" height="110" rx="10" fill="#f2f2f2" stroke="#333" stroke-width="2"/>
+  <text x="1010" y="350" text-anchor="middle" font-size="17" font-weight="bold" fill="#333">Entrepôt Lesquin</text>
+  <text x="1010" y="375" text-anchor="middle" font-size="14" fill="#555">prépare, puis répond</text>
+  <text x="1010" y="397" text-anchor="middle" font-size="14" fill="#555">sans connaître Roubaix</text>
+  <line x1="720" y1="360" x2="878" y2="360" stroke="#333" stroke-width="2.5" marker-end="url(#fleche)"/>
+  <text x="800" y="352" text-anchor="middle" font-size="14" fill="#333">2 · PreparerCommande</text>
+  <line x1="880" y1="410" x2="722" y2="410" stroke="#4A90D9" stroke-width="2.5" stroke-dasharray="7,5" marker-end="url(#flecheBleu)"/>
+  <text x="800" y="428" text-anchor="middle" font-size="14" fill="#4A90D9">3 · OrdreClos (LSQ)</text>
+
+  <!-- Légende -->
+  <line x1="880" y1="262" x2="930" y2="262" stroke="#333" stroke-width="2.5"/>
+  <text x="940" y="267" font-size="14" fill="#333">commande envoyée par la saga</text>
+  <line x1="880" y1="290" x2="930" y2="290" stroke="#4A90D9" stroke-width="2.5" stroke-dasharray="7,5"/>
+  <text x="940" y="295" font-size="14" fill="#333">réponse corrélée de l'entrepôt</text>
+
+  <text x="600" y="490" text-anchor="middle" font-size="17" fill="#555">Seule la saga sait quand la commande est complète ; les entrepôts ne se connaissent pas.</text>
+  <text x="600" y="518" text-anchor="middle" font-size="15" fill="#777">Implémentations .NET : MassTransit State Machine (Automatonymous), NServiceBus Saga, Wolverine Saga — module 6.</text>
+</svg>

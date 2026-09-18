@@ -1,0 +1,445 @@
+/* @theme utopios */
+
+@import 'gaia';
+
+/* ============================================================
+   IDENTITE UTOPIOS
+   ============================================================ */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #438ecc;
+}
+
+/* Reset des marges verticales heritees de Gaia.
+   NE PAS remettre `p { margin: 0 }` seul : sans les anciens wrappers <div>,
+   cette regle ecrasait l'espacement entre paragraphes et transformait les
+   slides en pave de texte. L'espacement est repose plus bas, dans le bloc
+   MISE EN PAGE (`section > * + *`). */
+ul,
+li,
+p {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+header {
+    background: linear-gradient(90deg, #6165ab 0%, #438ecc 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+section {
+    background: white;
+}
+
+/* add full-background color to gradiant on title */
+section.lead {
+    background: linear-gradient(90deg, #6165ab 0%, #438ecc 100%);
+}
+
+/* add white color on title */
+section.lead h1,
+section.lead h2,
+section.lead h3,
+section.lead h4,
+section.lead h5,
+section.lead h6 {
+    color: white;
+}
+
+/* Le corps des slides de titre/section aussi : sur le degrade bleu, le gris
+   fonce herite de Gaia est illisible. */
+section.lead p,
+section.lead li,
+section.lead strong,
+section.lead code {
+    color: #f2f5fb;
+}
+
+section.lead code {
+    background-color: rgba(0, 0, 0, 0.28);
+}
+
+/* paginate */
+section::after {
+    color: white;
+}
+
+footer {
+    background: linear-gradient(90deg, #6165ab 0%, #438ecc 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* remove spacing for code element */
+pre,
+marp-pre {
+    margin-top: 0.2rem
+}
+
+/* change color for inline-code */
+code {
+    background-color: #506975;
+}
+
+/* ============================================================
+   MISE EN PAGE : occuper la slide, pas de vide en bas
+   ------------------------------------------------------------
+   Gaia pose section{font-size:35px; padding:70px}. On reduit le
+   padding et on repartit le contenu verticalement pour que le
+   texte occupe la hauteur utile au lieu de se tasser en haut.
+   ============================================================ */
+
+section {
+    padding: 90px 60px 75px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    font-size: 30px;
+    line-height: 1.35;
+}
+
+/* Le titre de slide : compact, il ne mange pas la hauteur utile.
+   Gaia le pose a 1.5em (~45 px) : trop haut face a un corps de 30 px, la
+   slide parait desequilibree et le contenu ecrase. On resserre l'ecart. */
+section > h1:first-child,
+section > h2:first-child,
+section > h3:first-child,
+section > header:first-child + h1,
+section > header:first-child + h2,
+section > header:first-child + h3 {
+    margin-top: 0 !important;
+    margin-bottom: 0.4em;
+    line-height: 1.12;
+}
+
+section:not(.lead) > h1:first-child {
+    font-size: 1.28em;
+}
+
+section:not(.lead) > h2:first-child {
+    font-size: 1.2em;
+}
+
+section:not(.lead) > h3:first-child {
+    font-size: 1.08em;
+}
+
+/* Respiration reguliere entre les blocs de contenu.
+   Specificite montee volontairement (section section) pour passer devant le
+   reset `ul, li, p { margin: 0 }` du haut de fichier ET devant les regles
+   de Gaia : sans cela, tous les paragraphes se collent et la slide devient
+   un pave illisible. */
+section section > * + *,
+section > * + * {
+    margin-top: 0.55em !important;
+}
+
+/* Un paragraphe qui suit une liste (ou l'inverse) respire un peu plus */
+section > ul + p,
+section > ol + p,
+section > p + ul,
+section > p + ol,
+section > table + p,
+section > p + table {
+    margin-top: 0.7em !important;
+}
+
+section ul,
+section ol {
+    padding-left: 1.1em;
+}
+
+section li + li {
+    margin-top: 0.3em;
+}
+
+/* Les listes imbriquees restent lisibles sans ecraser la hierarchie */
+section li > ul,
+section li > ol {
+    margin-top: 0.25em;
+}
+
+/* Tableaux : pleine largeur, lisibles, sans debordement */
+section table {
+    width: 100%;
+    font-size: 0.8em;
+    border-collapse: collapse;
+}
+
+section table th,
+section table td {
+    padding: 0.3em 0.5em;
+    vertical-align: top;
+}
+
+/* Blocs de code.
+   ATTENTION : Marp ne rend PAS un <pre> mais un <marp-pre> (custom element,
+   avec auto-scaling). Un selecteur `section pre` ne matche donc RIEN — c'est
+   ce qui laissait le code retomber a ~11 px face a un titre de 45 px.
+   On cible les deux, et on fixe la taille sur le <code> car Gaia y applique
+   un .7em qui, cumule, ecrasait le texte. */
+section pre,
+section marp-pre {
+    font-size: 1em;
+    line-height: 1.32;
+    margin-bottom: 0.25em;
+}
+
+section pre > code,
+section marp-pre > code {
+    font-size: 0.78em;
+    padding: 0.5em 0.7em;
+}
+
+/* Images : jamais plus hautes que la zone utile */
+section img {
+    max-height: 62vh;
+    object-fit: contain;
+}
+
+/* Slides de section / titre : contenu centre, pas colle en haut */
+section.lead {
+    justify-content: center;
+    text-align: center;
+}
+
+section.lead h1 {
+    font-size: 2.1em;
+}
+
+/* Slide de section portant du contenu (clôture, plan d'action) :
+   le titre reste imposant mais le corps doit tenir sans toucher le footer. */
+section.lead.dense,
+section.lead.tight,
+section.lead.packed {
+    font-size: 25px;
+}
+
+section.lead.dense h1,
+section.lead.tight h1,
+section.lead.packed h1 {
+    font-size: 1.7em;
+    margin-bottom: 0.15em;
+}
+
+section.lead.dense h2,
+section.lead.tight h2,
+section.lead.packed h2 {
+    font-size: 1.15em;
+}
+
+/* ============================================================
+   CLASSES DE DENSITE
+   ------------------------------------------------------------
+   A n'utiliser QUE sur les slides reellement chargees.
+   Une slide normale ne porte aucune classe : elle herite de la
+   taille de base, qui remplit correctement la hauteur.
+   ============================================================ */
+
+/* Slide chargee : ~20 % de contenu en plus */
+section.dense {
+    font-size: 27px;
+    line-height: 1.3;
+}
+
+section.dense pre > code,
+section.dense marp-pre > code {
+    font-size: 0.76em;
+}
+
+/* Slide tres chargee : gros tableau comparatif, long listing */
+section.tight {
+    font-size: 24px;
+    line-height: 1.25;
+}
+
+section.tight pre > code,
+section.tight marp-pre > code {
+    font-size: 0.78em;
+}
+
+section.tight table {
+    font-size: 0.85em;
+}
+
+/* Slide surchargee : grand tableau comparatif, listing long */
+section.packed {
+    font-size: 21px;
+    line-height: 1.22;
+}
+
+section.packed pre > code,
+section.packed marp-pre > code {
+    font-size: 0.8em;
+}
+
+section.packed table {
+    font-size: 0.86em;
+}
+
+/* Dernier recours : la slide la plus chargee du deck.
+   Au-dela, c'est le contenu qu'il faut scinder, pas la police. */
+section.micro {
+    font-size: 18px;
+    line-height: 1.2;
+}
+
+section.micro pre > code,
+section.micro marp-pre > code {
+    font-size: 0.84em;
+}
+
+section.micro table {
+    font-size: 0.9em;
+}
+
+section.micro li + li {
+    margin-top: 0.18em;
+}
+
+/* Slide dont le coeur est un schema ASCII large */
+section.schema pre > code,
+section.schema marp-pre > code {
+    font-size: 0.72em;
+    line-height: 1.28;
+}
+
+/* Slide centree sur une image / un SVG : on maximise le visuel.
+   Le schema est le contenu principal : il doit remplir la slide,
+   pas flotter au milieu d'une page blanche. */
+/* Alignement en HAUT, surtout pas `center` : centrer verticalement fait
+   deborder le contenu symetriquement, et la legende passe sous le footer
+   sans qu'aucune mesure de debordement ne la signale. */
+section.visual {
+    justify-content: flex-start;
+}
+
+section.visual img {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    /* Le schema ne prend que la hauteur restante : `flex: 1` + min-height 0
+       laissent la legende se poser AVANT que l'image ne reclame sa place.
+       Une hauteur en vh ne suffisait pas : une legende sur deux lignes
+       passait sous le footer. */
+    max-height: 54vh;
+    margin: 0 auto;
+}
+
+section.visual > p:has(img) {
+    flex: 0 1 auto;
+    min-height: 0;
+}
+
+/* La legende reste visible quoi qu'il arrive */
+section.visual > p:not(:has(img)) {
+    flex: 0 0 auto;
+}
+
+/* Une slide `visual` SANS legende peut occuper toute la hauteur */
+section.visual > p:only-of-type img {
+    max-height: 68vh;
+}
+
+/* La legende sous un schema reste discrete */
+section.visual > p:last-child {
+    text-align: center;
+    font-size: 0.82em;
+    color: #506975;
+    margin-top: 0.5em;
+}
+
+/* Slide de quiz : peu de texte, on l'aere et on le repartit
+   verticalement plutot que de le laisser tasse en haut. */
+section.quiz {
+    justify-content: center;
+    font-size: 29px;
+}
+
+section.quiz > h2:first-child {
+    font-size: 1.18em;
+    margin-bottom: 0.7em;
+}
+
+section.quiz > p {
+    margin-top: 0.55em;
+}
+
+section.quiz strong {
+    color: #6165ab;
+}
+
+section.quiz ul {
+    margin-top: 0.3em;
+}
+
+/* Note de bas de slide, commentaire de schema */
+section .note {
+    font-size: 0.78em;
+    color: #506975;
+}
+
+/* Mise en avant d'un point cle */
+section .key {
+    border-left: 5px solid #438ecc;
+    padding: 0.35em 0.8em;
+    background: #f2f5fb;
+    margin-top: 0.55em;
+}
+
+/* Encart d'alerte : piege, anti-pattern */
+section .warn {
+    border-left: 5px solid #d9822b;
+    padding: 0.35em 0.8em;
+    background: #fdf5ec;
+    margin-top: 0.55em;
+}
+
+/* ============================================================
+   STRUCTURE (colonnes)
+   ============================================================ */
+
+.columns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.columns-center {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    justify-items: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.columns3 {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.columns3-center {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    justify-items: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+}

@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="fleche" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#333"/>
+    </marker>
+    <marker id="fleche-vert" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#8CC63F"/>
+    </marker>
+  </defs>
+  <text x="600" y="34" text-anchor="middle" font-size="26" font-weight="bold" fill="#333">Strangler Fig : YARP en façade, Trame s'éteint fonction par fonction</text>
+
+  <!-- Clients -->
+  <text x="140" y="82" text-anchor="middle" font-size="17" font-weight="bold" fill="#333">Clients</text>
+  <rect x="30" y="96" width="220" height="58" rx="10" fill="#f2f2f2" stroke="#333" stroke-width="2"/>
+  <text x="140" y="120" text-anchor="middle" font-size="17" fill="#333">Postes WinForms</text>
+  <text x="140" y="142" text-anchor="middle" font-size="15" fill="#555">(compatibilité 18 mois)</text>
+  <rect x="30" y="176" width="220" height="58" rx="10" fill="#f2f2f2" stroke="#333" stroke-width="2"/>
+  <text x="140" y="200" text-anchor="middle" font-size="17" fill="#333">Extranet Blazor</text>
+  <text x="140" y="222" text-anchor="middle" font-size="15" fill="#555">1 200 clients pro</text>
+  <rect x="30" y="256" width="220" height="58" rx="10" fill="#f2f2f2" stroke="#333" stroke-width="2"/>
+  <text x="140" y="280" text-anchor="middle" font-size="17" fill="#333">Application MAUI</text>
+  <text x="140" y="302" text-anchor="middle" font-size="15" fill="#555">scanners entrepôts</text>
+
+  <line x1="250" y1="125" x2="338" y2="180" stroke="#333" stroke-width="2.5" marker-end="url(#fleche)"/>
+  <line x1="250" y1="205" x2="338" y2="205" stroke="#333" stroke-width="2.5" marker-end="url(#fleche)"/>
+  <line x1="250" y1="285" x2="338" y2="230" stroke="#333" stroke-width="2.5" marker-end="url(#fleche)"/>
+
+  <!-- YARP -->
+  <rect x="340" y="96" width="290" height="240" rx="12" fill="#4A90D9" stroke="#333" stroke-width="2"/>
+  <text x="485" y="126" text-anchor="middle" font-size="20" font-weight="bold" fill="#fff">Façade YARP</text>
+  <text x="485" y="150" text-anchor="middle" font-size="15" fill="#fff">reverse proxy ASP.NET Core 10</text>
+  <line x1="360" y1="164" x2="610" y2="164" stroke="#fff" stroke-width="1" opacity="0.6"/>
+  <text x="360" y="192" font-size="15" fill="#fff" font-family="Consolas, Menlo, monospace">/api/commandes/*   → Trame 2</text>
+  <text x="360" y="218" font-size="15" fill="#fff" font-family="Consolas, Menlo, monospace">/api/catalogue/*   → Trame 2</text>
+  <text x="360" y="244" font-size="15" fill="#fff" font-family="Consolas, Menlo, monospace">/extranet/*        → Trame 2</text>
+  <text x="360" y="270" font-size="15" fill="#fff" font-family="Consolas, Menlo, monospace">/*                 → Trame</text>
+  <text x="485" y="312" text-anchor="middle" font-size="14" fill="#fff">une route = une ligne de configuration</text>
+
+  <!-- Vers legacy et Trame 2 -->
+  <line x1="630" y1="150" x2="718" y2="130" stroke="#333" stroke-width="2.5" marker-end="url(#fleche)"/>
+  <text x="674" y="118" text-anchor="middle" font-size="14" fill="#555">encore 60 %</text>
+  <line x1="630" y1="270" x2="718" y2="290" stroke="#8CC63F" stroke-width="3" marker-end="url(#fleche-vert)"/>
+  <text x="674" y="316" text-anchor="middle" font-size="14" fill="#555">cible 100 %</text>
+
+  <!-- Trame legacy -->
+  <rect x="720" y="84" width="450" height="96" rx="12" fill="#fdf5ec" stroke="#E67E22" stroke-width="2"/>
+  <text x="945" y="112" text-anchor="middle" font-size="19" font-weight="bold" fill="#333">Trame (2011) — IIS, serveurs Windows</text>
+  <text x="945" y="138" text-anchor="middle" font-size="16" fill="#555">WinForms .NET Framework 4.8 · WCF SOAP · Web Forms</text>
+  <text x="945" y="162" text-anchor="middle" font-size="16" fill="#555">MSMQ · SQL Server 2016, 400 procédures stockées</text>
+
+  <!-- ACL -->
+  <rect x="720" y="194" width="450" height="36" rx="8" fill="#f2f2f2" stroke="#333" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="945" y="218" text-anchor="middle" font-size="15" fill="#333">Anti-Corruption Layer : adaptateur Trame → contrats Trame 2</text>
+
+  <!-- Trame 2 -->
+  <rect x="720" y="244" width="450" height="96" rx="12" fill="#eaf6da" stroke="#8CC63F" stroke-width="2.5"/>
+  <text x="945" y="272" text-anchor="middle" font-size="19" font-weight="bold" fill="#333">Trame 2 — Azure Container Apps</text>
+  <text x="945" y="298" text-anchor="middle" font-size="16" fill="#555">ASP.NET Core 10 · Minimal API · EF Core 10 · Blazor</text>
+  <text x="945" y="322" text-anchor="middle" font-size="16" fill="#555">MassTransit · Service Bus · Entra ID · Aspire</text>
+
+  <!-- Frise -->
+  <text x="600" y="382" text-anchor="middle" font-size="17" font-weight="bold" fill="#333">Ordre de bascule décidé par valeur, risque et dépendances</text>
+  <rect x="60" y="396" width="270" height="52" rx="8" fill="#8CC63F" stroke="#333" stroke-width="1.5"/>
+  <text x="195" y="418" text-anchor="middle" font-size="15" font-weight="bold" fill="#fff">T4 2026</text>
+  <text x="195" y="438" text-anchor="middle" font-size="15" fill="#fff">catalogue et consultation de stock</text>
+  <rect x="330" y="396" width="270" height="52" rx="8" fill="#8CC63F" stroke="#333" stroke-width="1.5" opacity="0.85"/>
+  <text x="465" y="418" text-anchor="middle" font-size="15" font-weight="bold" fill="#fff">T1 2027</text>
+  <text x="465" y="438" text-anchor="middle" font-size="15" fill="#fff">prise de commande, extranet</text>
+  <rect x="600" y="396" width="270" height="52" rx="8" fill="#4A90D9" stroke="#333" stroke-width="1.5"/>
+  <text x="735" y="418" text-anchor="middle" font-size="15" font-weight="bold" fill="#fff">T2 2027</text>
+  <text x="735" y="438" text-anchor="middle" font-size="15" fill="#fff">ordres de préparation, EDI</text>
+  <rect x="870" y="396" width="270" height="52" rx="8" fill="#333" stroke="#333" stroke-width="1.5"/>
+  <text x="1005" y="418" text-anchor="middle" font-size="15" font-weight="bold" fill="#fff">T4 2027</text>
+  <text x="1005" y="438" text-anchor="middle" font-size="15" fill="#fff">facturation, extinction de Trame</text>
+
+  <text x="600" y="500" text-anchor="middle" font-size="18" fill="#555">Chaque bascule est réversible : une route YARP se rebranche sur Trame en une ligne de configuration.</text>
+  <text x="600" y="528" text-anchor="middle" font-size="18" fill="#555">Trame reste en production jusqu'au bout ; personne ne réécrit 180 000 lignes d'un coup.</text>
+</svg>

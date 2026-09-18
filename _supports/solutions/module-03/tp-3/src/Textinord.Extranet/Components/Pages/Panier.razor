@@ -1,0 +1,69 @@
+@page "/panier"
+@inject PanierService PanierService
+
+<PageTitle>Panier - Textinord</PageTitle>
+
+<h1>Votre panier</h1>
+
+@if (PanierService.EstVide)
+{
+    <p class="text-muted">Votre panier est vide. <a href="catalogue">Parcourir le catalogue</a>.</p>
+}
+else
+{
+    <table class="table align-middle lignes-panier">
+        <thead>
+            <tr>
+                <th>Référence</th>
+                <th>Article</th>
+                <th class="text-end">Prix unitaire</th>
+                <th style="width: 8rem">Quantité</th>
+                <th class="text-end">Remise</th>
+                <th class="text-end">Net HT</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ligne in PanierService.Lignes)
+            {
+                <tr @key="ligne.Article.Reference">
+                    <td><code>@ligne.Article.Reference</code></td>
+                    <td>@ligne.Article.Libelle</td>
+                    <td class="text-end">@Format.Prix(ligne.PrixUnitaire)</td>
+                    <td>
+                        <input type="number" class="form-control form-control-sm" min="0" aria-label="Quantité"
+                               value="@ligne.Quantite"
+                               @onchange="e => ModifierQuantite(ligne.Article.Reference, e)" />
+                    </td>
+                    <td class="text-end">@Format.Pourcent(ligne.TauxRemise)</td>
+                    <td class="text-end">@Format.Prix(ligne.MontantNet)</td>
+                    <td class="text-end">
+                        <button type="button" class="btn btn-outline-danger btn-sm" @onclick="() => PanierService.Retirer(ligne.Article.Reference)">
+                            Retirer
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="row">
+        <div class="col-md-6 offset-md-6">
+            <RecapitulatifPanier TotalBrut="PanierService.TotalBrut"
+                                 TotalRemise="PanierService.TotalRemise"
+                                 TotalNet="PanierService.TotalNet" />
+            <div class="d-flex justify-content-between mt-3">
+                <button type="button" class="btn btn-outline-secondary" @onclick="PanierService.Vider">Vider le panier</button>
+                <a class="btn btn-primary" href="commande">Passer commande</a>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private void ModifierQuantite(string reference, ChangeEventArgs e)
+    {
+        var quantite = int.TryParse(e.Value?.ToString(), out var valeur) ? valeur : 0;
+        PanierService.ModifierQuantite(reference, quantite);
+    }
+}

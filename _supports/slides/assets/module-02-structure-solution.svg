@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="fleche" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#333"/>
+    </marker>
+    <marker id="flecheGris" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#888"/>
+    </marker>
+  </defs>
+
+  <text x="600" y="36" text-anchor="middle" font-size="26" font-weight="bold" fill="#333">Structure de la solution Trame 2 : un projet par couche, des références orientées</text>
+
+  <!-- Arborescence -->
+  <rect x="40" y="62" width="500" height="420" rx="10" fill="#f2f2f2" stroke="#333" stroke-width="2"/>
+  <text x="60" y="90" font-size="15" font-weight="bold" fill="#333">Textinord.Trame.sln</text>
+  <text x="60" y="114" font-size="15" fill="#333">Directory.Build.props</text>
+  <text x="300" y="114" font-size="13" fill="#555">propriétés communes, analyzers</text>
+  <text x="60" y="138" font-size="15" fill="#333">Directory.Packages.props</text>
+  <text x="300" y="138" font-size="13" fill="#555">versions NuGet centralisées</text>
+  <text x="60" y="162" font-size="15" fill="#333">.editorconfig</text>
+  <text x="300" y="162" font-size="13" fill="#555">style et règles de nommage</text>
+  <text x="60" y="186" font-size="15" fill="#333">global.json</text>
+  <text x="300" y="186" font-size="13" fill="#555">bande de SDK 10.0.x</text>
+  <text x="60" y="214" font-size="15" font-weight="bold" fill="#4A90D9">src/</text>
+  <text x="84" y="238" font-size="15" fill="#333">Textinord.Trame.Domain</text>
+  <text x="300" y="238" font-size="13" fill="#555">entités, règles, ports</text>
+  <text x="84" y="262" font-size="15" fill="#333">Textinord.Trame.Application</text>
+  <text x="300" y="262" font-size="13" fill="#555">cas d'usage, messages, bus</text>
+  <text x="84" y="286" font-size="15" fill="#333">Textinord.Trame.Infrastructure</text>
+  <text x="300" y="286" font-size="13" fill="#555">EF Core, passerelles, hosting</text>
+  <text x="84" y="310" font-size="15" fill="#333">Textinord.Trame.Api</text>
+  <text x="300" y="310" font-size="13" fill="#555">Minimal API, OpenAPI</text>
+  <text x="84" y="334" font-size="15" fill="#333">Textinord.Trame.Worker</text>
+  <text x="300" y="334" font-size="13" fill="#555">consommateurs, tâches</text>
+  <text x="60" y="362" font-size="15" font-weight="bold" fill="#4A90D9">tests/</text>
+  <text x="84" y="386" font-size="15" fill="#333">Textinord.Trame.Domain.Tests</text>
+  <text x="84" y="410" font-size="15" fill="#333">Textinord.Trame.Application.Tests</text>
+  <text x="60" y="438" font-size="15" font-weight="bold" fill="#4A90D9">tools/</text>
+  <text x="300" y="438" font-size="13" fill="#555">scripts, générateurs</text>
+  <text x="60" y="464" font-size="15" font-weight="bold" fill="#4A90D9">docs/</text>
+  <text x="300" y="464" font-size="13" fill="#555">ADR, architecture.md</text>
+
+  <!-- Graphe de références -->
+  <text x="870" y="82" text-anchor="middle" font-size="15" font-weight="bold" fill="#4A90D9">RÉFÉRENCES AUTORISÉES</text>
+
+  <rect x="600" y="100" width="160" height="50" rx="8" fill="#333"/>
+  <text x="680" y="131" text-anchor="middle" font-size="16" font-weight="bold" fill="#fff">Api</text>
+  <rect x="980" y="100" width="160" height="50" rx="8" fill="#333"/>
+  <text x="1060" y="131" text-anchor="middle" font-size="16" font-weight="bold" fill="#fff">Worker</text>
+
+  <rect x="600" y="230" width="160" height="50" rx="8" fill="#4A90D9"/>
+  <text x="680" y="261" text-anchor="middle" font-size="16" font-weight="bold" fill="#fff">Application</text>
+  <rect x="980" y="230" width="160" height="50" rx="8" fill="#E67E22"/>
+  <text x="1060" y="261" text-anchor="middle" font-size="16" font-weight="bold" fill="#fff">Infrastructure</text>
+
+  <rect x="790" y="360" width="160" height="50" rx="8" fill="#8CC63F"/>
+  <text x="870" y="391" text-anchor="middle" font-size="16" font-weight="bold" fill="#fff">Domain</text>
+
+  <!-- Api -> Application, Worker -> Infrastructure (solides) -->
+  <line x1="680" y1="150" x2="680" y2="228" stroke="#333" stroke-width="2.5" marker-end="url(#fleche)"/>
+  <line x1="1060" y1="150" x2="1060" y2="228" stroke="#333" stroke-width="2.5" marker-end="url(#fleche)"/>
+  <!-- Api -> Infrastructure, Worker -> Application (composition, pointillés) -->
+  <line x1="760" y1="135" x2="978" y2="232" stroke="#888" stroke-width="2" stroke-dasharray="6,5" marker-end="url(#flecheGris)"/>
+  <line x1="980" y1="135" x2="762" y2="232" stroke="#888" stroke-width="2" stroke-dasharray="6,5" marker-end="url(#flecheGris)"/>
+  <!-- Infrastructure -> Application -->
+  <line x1="980" y1="255" x2="762" y2="255" stroke="#333" stroke-width="2.5" marker-end="url(#fleche)"/>
+  <text x="870" y="247" text-anchor="middle" font-size="13" fill="#333">implémente les ports</text>
+  <!-- Application -> Domain, Infrastructure -> Domain -->
+  <line x1="700" y1="280" x2="838" y2="360" stroke="#333" stroke-width="2.5" marker-end="url(#fleche)"/>
+  <line x1="1040" y1="280" x2="902" y2="360" stroke="#333" stroke-width="2.5" marker-end="url(#fleche)"/>
+
+  <line x1="600" y1="440" x2="650" y2="440" stroke="#333" stroke-width="2.5"/>
+  <text x="660" y="445" font-size="14" fill="#333">référence de compilation</text>
+  <line x1="860" y1="440" x2="910" y2="440" stroke="#888" stroke-width="2" stroke-dasharray="6,5"/>
+  <text x="920" y="445" font-size="14" fill="#333">composition (DI) seulement</text>
+
+  <text x="870" y="478" text-anchor="middle" font-size="14" fill="#555">Domain ne référence rien ; Application ignore Infrastructure ;</text>
+  <text x="870" y="498" text-anchor="middle" font-size="14" fill="#555">seuls les hôtes (Api, Worker) assemblent le tout au démarrage.</text>
+
+  <text x="600" y="535" text-anchor="middle" font-size="17" fill="#555">Un projet = un assembly = un namespace racine : Textinord.Trame.&lt;Couche&gt;</text>
+</svg>

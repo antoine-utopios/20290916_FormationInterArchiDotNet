@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="fleche" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#333"/>
+    </marker>
+    <marker id="flecheOrange" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#E67E22"/>
+    </marker>
+    <marker id="flecheVert" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#8CC63F"/>
+    </marker>
+  </defs>
+
+  <text x="600" y="36" text-anchor="middle" font-size="26" font-weight="bold" fill="#333">Pipes and Filters : le flux de commande Trame 2, du producteur aux entrepôts</text>
+
+  <!-- Producteur -->
+  <rect x="30" y="95" width="155" height="70" rx="10" fill="#333"/>
+  <text x="107" y="125" text-anchor="middle" font-size="18" font-weight="bold" fill="#fff">Producteur</text>
+  <text x="107" y="149" text-anchor="middle" font-size="14" fill="#fff">API, EDI, Trame</text>
+  <line x1="185" y1="130" x2="203" y2="130" stroke="#333" stroke-width="2.5" marker-end="url(#fleche)"/>
+
+  <!-- Canal commandes.validees -->
+  <rect x="205" y="108" width="200" height="44" rx="22" fill="#f2f5fb" stroke="#4A90D9" stroke-width="2"/>
+  <text x="305" y="136" text-anchor="middle" font-size="16" fill="#333">commandes.validees</text>
+  <line x1="405" y1="130" x2="423" y2="130" stroke="#333" stroke-width="2.5" marker-end="url(#fleche)"/>
+
+  <!-- Routeur -->
+  <rect x="425" y="95" width="160" height="70" rx="10" fill="#4A90D9"/>
+  <text x="505" y="123" text-anchor="middle" font-size="18" font-weight="bold" fill="#fff">Routeur</text>
+  <text x="505" y="148" text-anchor="middle" font-size="15" fill="#fff">par contenu (pays)</text>
+
+  <!-- Canaux preparations -->
+  <path d="M585,120 L600,120 L600,85 L603,85" fill="none" stroke="#333" stroke-width="2.5" marker-end="url(#fleche)"/>
+  <path d="M585,140 L600,140 L600,175 L603,175" fill="none" stroke="#333" stroke-width="2.5" marker-end="url(#fleche)"/>
+  <rect x="605" y="63" width="200" height="44" rx="22" fill="#f2f5fb" stroke="#4A90D9" stroke-width="2"/>
+  <text x="705" y="91" text-anchor="middle" font-size="16" fill="#333">preparations.france</text>
+  <rect x="605" y="153" width="200" height="44" rx="22" fill="#f2f5fb" stroke="#4A90D9" stroke-width="2"/>
+  <text x="705" y="181" text-anchor="middle" font-size="16" fill="#333">preparations.export</text>
+  <path d="M805,85 L812,85 L812,120 L823,120" fill="none" stroke="#333" stroke-width="2.5" marker-end="url(#fleche)"/>
+  <path d="M805,175 L812,175 L812,140 L823,140" fill="none" stroke="#333" stroke-width="2.5" marker-end="url(#fleche)"/>
+
+  <!-- Splitter + traducteur -->
+  <rect x="825" y="95" width="160" height="70" rx="10" fill="#E67E22"/>
+  <text x="905" y="123" text-anchor="middle" font-size="18" font-weight="bold" fill="#fff">Splitter +</text>
+  <text x="905" y="148" text-anchor="middle" font-size="16" fill="#fff">traducteur WMS</text>
+
+  <!-- Canaux entrepot -->
+  <path d="M985,120 L995,120 L995,85 L1003,85" fill="none" stroke="#333" stroke-width="2.5" marker-end="url(#fleche)"/>
+  <path d="M985,140 L995,140 L995,175 L1003,175" fill="none" stroke="#333" stroke-width="2.5" marker-end="url(#fleche)"/>
+  <rect x="1005" y="63" width="165" height="44" rx="22" fill="#f2f5fb" stroke="#4A90D9" stroke-width="2"/>
+  <text x="1087" y="91" text-anchor="middle" font-size="16" fill="#333">entrepot.RBX</text>
+  <text x="1087" y="125" text-anchor="middle" font-size="14" fill="#555">→ WMS Roubaix</text>
+  <rect x="1005" y="153" width="165" height="44" rx="22" fill="#f2f5fb" stroke="#4A90D9" stroke-width="2"/>
+  <text x="1087" y="181" text-anchor="middle" font-size="16" fill="#333">entrepot.LSQ</text>
+  <text x="1087" y="215" text-anchor="middle" font-size="14" fill="#555">→ WMS Lesquin</text>
+
+  <!-- Wire tap vers audit -->
+  <path d="M305,152 L305,298" fill="none" stroke="#8CC63F" stroke-width="2.5" stroke-dasharray="7,5" marker-end="url(#flecheVert)"/>
+  <text x="315" y="235" font-size="14" fill="#5a7a2a">wire tap : copie</text>
+  <rect x="205" y="300" width="200" height="44" rx="22" fill="#eaf6da" stroke="#8CC63F" stroke-width="2"/>
+  <text x="305" y="328" text-anchor="middle" font-size="16" fill="#333">audit</text>
+  <line x1="205" y1="322" x2="182" y2="322" stroke="#333" stroke-width="2.5" marker-end="url(#fleche)"/>
+  <rect x="30" y="290" width="150" height="64" rx="10" fill="#f2f2f2" stroke="#333" stroke-width="2"/>
+  <text x="105" y="317" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">Historique</text>
+  <text x="105" y="339" text-anchor="middle" font-size="14" fill="#555">par corrélation</text>
+
+  <!-- Dead letter -->
+  <path d="M505,165 L505,298" fill="none" stroke="#E67E22" stroke-width="2.5" stroke-dasharray="7,5" marker-end="url(#flecheOrange)"/>
+  <text x="515" y="235" font-size="14" fill="#a85f14">pays absent</text>
+  <path d="M905,165 L905,322 L812,322" fill="none" stroke="#E67E22" stroke-width="2.5" stroke-dasharray="7,5" marker-end="url(#flecheOrange)"/>
+  <text x="915" y="250" font-size="14" fill="#a85f14">entrepôt inconnu</text>
+  <rect x="425" y="300" width="380" height="44" rx="22" fill="#fdf5ec" stroke="#E67E22" stroke-width="2"/>
+  <text x="615" y="328" text-anchor="middle" font-size="16" fill="#333"><tspan font-weight="bold">dead-letter</tspan> : expiré, rejeté, échec de traitement</text>
+
+  <!-- Légende -->
+  <rect x="60" y="420" width="60" height="30" rx="6" fill="#4A90D9"/>
+  <text x="130" y="441" font-size="15" fill="#333">filtre : un handler, une responsabilité</text>
+  <rect x="470" y="420" width="70" height="30" rx="15" fill="#f2f5fb" stroke="#4A90D9" stroke-width="2"/>
+  <text x="550" y="441" font-size="15" fill="#333">canal : un Channel&lt;MessageEnvelope&gt; borné</text>
+  <line x1="900" y1="435" x2="960" y2="435" stroke="#E67E22" stroke-width="2.5" stroke-dasharray="7,5"/>
+  <text x="970" y="441" font-size="15" fill="#333">vers la dead letter</text>
+
+  <text x="600" y="515" text-anchor="middle" font-size="17" fill="#555">Un filtre ne connaît que ses canaux : le bus in-process se remplace par Azure Service Bus sans toucher aux filtres.</text>
+</svg>

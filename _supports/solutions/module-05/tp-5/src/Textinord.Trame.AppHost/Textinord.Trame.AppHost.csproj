@@ -1,0 +1,27 @@
+<Project Sdk="Aspire.AppHost.Sdk/13.5.3">
+
+  <!--
+    Orchestrateur .NET Aspire de Trame 2 (développement local uniquement).
+    `dotnet run` ici démarre l'API, le dashboard (traces, logs, métriques OTLP) et, aux modules
+    suivants, les dépendances (Redis, RabbitMQ, SQL Server) sous forme de containers.
+    Aspire 13 n'exige plus de workload : tout vient de NuGet.
+  -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <UserSecretsId>textinord-trame-apphost-3c7d9a</UserSecretsId>
+    <!-- Le bundle CLI Aspire (commandes `aspire run` / `aspire deploy`) n'est pas embarqué : `dotnet run` suffit
+         en formation. Installer le CLI à part si besoin : dotnet tool install -g Aspire.Cli -->
+    <AspireUseCliBundle>false</AspireUseCliBundle>
+    <NoWarn>$(NoWarn);ASPIRE010</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.AppHost" Version="13.5.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Textinord.Trame.Api\Textinord.Trame.Api.csproj" />
+  </ItemGroup>
+
+</Project>

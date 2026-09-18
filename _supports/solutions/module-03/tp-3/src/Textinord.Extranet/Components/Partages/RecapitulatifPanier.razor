@@ -1,0 +1,19 @@
+<dl class="row recapitulatif-panier mb-0">
+    <dt class="col-8">Total brut HT</dt>
+    <dd class="col-4 text-end">@Format.Prix(TotalBrut)</dd>
+    <dt class="col-8">Remises (client + volume, plafond @Format.Pourcent(Tarification.PlafondPourcent))</dt>
+    <dd class="col-4 text-end">- @Format.Prix(TotalRemise)</dd>
+    <dt class="col-8 fw-bold">Total net HT</dt>
+    <dd class="col-4 text-end fw-bold total-net">@Format.Prix(TotalNet)</dd>
+</dl>
+
+@code {
+    [Parameter, EditorRequired]
+    public decimal TotalBrut { get; set; }
+
+    [Parameter, EditorRequired]
+    public decimal TotalRemise { get; set; }
+
+    [Parameter, EditorRequired]
+    public decimal TotalNet { get; set; }
+}

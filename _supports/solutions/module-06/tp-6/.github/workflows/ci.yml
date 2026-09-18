@@ -1,0 +1,214 @@
+# =============================================================================
+# CI/CD de Trame 2 — équivalent GitHub Actions du pipeline Azure DevOps.
+#
+# build-test ──▶ publish ──▶ deploy-recette ──▶ deploy-production
+#                             (main, release/**)  (release/** + reviewers requis
+#                                                  sur l'environnement « production »)
+#
+# Les secrets (AZURE_CLIENT_ID, AZURE_TENANT_ID, AZURE_SUBSCRIPTION_ID) sont des
+# secrets d'environnement ; la connexion Azure utilise OIDC, sans mot de passe stocké.
+# =============================================================================
+name: CI/CD Trame 2
+
+on:
+  push:
+    branches: [main, 'release/**']
+    paths-ignore: ['docs/**', 'CHANGELOG.md']
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  checks: write        # publication des résultats de tests
+  packages: write      # images vers ghcr.io
+  id-token: write      # connexion Azure par OIDC
+
+env:
+  DOTNET_CLI_TELEMETRY_OPTOUT: 1
+  DOTNET_NOLOGO: 1
+  CONFIGURATION: Release
+
+jobs:
+  # ---------------------------------------------------------------------------
+  build-test:
+    name: Compilation et tests
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.nbgv.outputs.SemVer2 }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0            # Nerdbank.GitVersioning a besoin de l'historique
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+          cache: true
+          cache-dependency-path: '**/Directory.Packages.props'
+
+      - name: Version SemVer calculée
+        id: nbgv
+        uses: dotnet/nbgv@v0.4
+        with:
+          setAllVars: true
+
+      - name: dotnet restore
+        run: dotnet restore
+
+      - name: dotnet build
+        run: dotnet build --no-restore --configuration $CONFIGURATION
+
+      - name: dotnet test (résultats TRX + couverture Cobertura)
+        run: >-
+          dotnet test --no-build --configuration $CONFIGURATION
+          --logger "trx;LogFileName=tests.trx"
+          --collect:"XPlat Code Coverage"
+          --results-directory TestResults
+
+      - name: Rapport de tests dans l'onglet Checks
+        if: always()
+        uses: dorny/test-reporter@v1
+        with:
+          name: Tests xUnit
+          path: TestResults/**/*.trx
+          reporter: dotnet-trx
+
+      - name: Résumé de couverture dans le job
+        if: always()
+        uses: irongut/CodeCoverageSummary@v1.3.0
+        with:
+          filename: TestResults/**/coverage.cobertura.xml
+          format: markdown
+          output: both
+          thresholds: '60 80'
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: resultats-tests
+          path: TestResults
+
+  # ---------------------------------------------------------------------------
+  publish:
+    name: Publication des artefacts et images
+    needs: build-test
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: dotnet publish (API et Worker)
+        run: |
+          dotnet publish src/Textinord.Trame.Api/Textinord.Trame.Api.csproj --configuration $CONFIGURATION --output publish/api
+          dotnet publish src/Textinord.Trame.Worker/Textinord.Trame.Worker.csproj --configuration $CONFIGURATION --output publish/worker
+          cp CHANGELOG.md publish/
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: trame2-${{ needs.build-test.outputs.version }}
+          path: publish
+
+      - name: Connexion à GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Images conteneur (dotnet publish /t:PublishContainer)
+        run: |
+          dotnet publish src/Textinord.Trame.Api/Textinord.Trame.Api.csproj --configuration $CONFIGURATION \
+            -t:PublishContainer -p:ContainerRegistry=ghcr.io \
+            -p:ContainerRepository=${{ github.repository_owner }}/trame2-api \
+            -p:ContainerImageTags='"${{ needs.build-test.outputs.version }};latest"'
+          dotnet publish src/Textinord.Trame.Worker/Textinord.Trame.Worker.csproj --configuration $CONFIGURATION \
+            -t:PublishContainer -p:ContainerRegistry=ghcr.io \
+            -p:ContainerRepository=${{ github.repository_owner }}/trame2-worker \
+            -p:ContainerImageTags='"${{ needs.build-test.outputs.version }};latest"'
+
+  # ---------------------------------------------------------------------------
+  deploy-recette:
+    name: Déploiement en recette
+    needs: [build-test, publish]
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/release/'))
+    runs-on: ubuntu-latest
+    environment:
+      name: recette
+      url: https://trame2-api-recette.textinord.fr
+    steps:
+      - name: Connexion Azure (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Mise à jour des Container Apps de recette
+        uses: azure/cli@v2
+        with:
+          inlineScript: |
+            az containerapp update --name trame2-api-recette --resource-group ${{ vars.RESOURCE_GROUP_RECETTE }} \
+              --image ghcr.io/${{ github.repository_owner }}/trame2-api:${{ needs.build-test.outputs.version }}
+            az containerapp update --name trame2-worker-recette --resource-group ${{ vars.RESOURCE_GROUP_RECETTE }} \
+              --image ghcr.io/${{ github.repository_owner }}/trame2-worker:${{ needs.build-test.outputs.version }}
+
+      - name: Test de fumée
+        run: curl --fail --silent --show-error https://trame2-api-recette.textinord.fr/openapi/v1.json > /dev/null
+
+  # ---------------------------------------------------------------------------
+  deploy-production:
+    name: Déploiement en production
+    needs: [build-test, deploy-recette]
+    if: startsWith(github.ref, 'refs/heads/release/')
+    runs-on: ubuntu-latest
+    environment:
+      name: production          # Settings > Environments : reviewers requis (Awa Diop, Sofia Marques)
+      url: https://trame2-api.textinord.fr
+    steps:
+      - name: Connexion Azure (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Nouvelle révision, canary 10 %
+        uses: azure/cli@v2
+        with:
+          inlineScript: |
+            az containerapp update --name trame2-api --resource-group ${{ vars.RESOURCE_GROUP_PROD }} \
+              --image ghcr.io/${{ github.repository_owner }}/trame2-api:${{ needs.build-test.outputs.version }} \
+              --revision-suffix v${{ needs.build-test.outputs.version }}
+            az containerapp update --name trame2-worker --resource-group ${{ vars.RESOURCE_GROUP_PROD }} \
+              --image ghcr.io/${{ github.repository_owner }}/trame2-worker:${{ needs.build-test.outputs.version }}
+            az containerapp ingress traffic set --name trame2-api --resource-group ${{ vars.RESOURCE_GROUP_PROD }} \
+              --label-weight nouvelle=10 stable=90
+
+      - name: Surveillance 5 minutes
+        run: |
+          for i in $(seq 1 10); do
+            curl --fail --silent https://trame2-api.textinord.fr/openapi/v1.json > /dev/null || exit 1
+            sleep 30
+          done
+
+      - name: Bascule à 100 %
+        uses: azure/cli@v2
+        with:
+          inlineScript: |
+            az containerapp ingress traffic set --name trame2-api --resource-group ${{ vars.RESOURCE_GROUP_PROD }} \
+              --label-weight nouvelle=100 stable=0
+
+      - name: Rollback en cas d'échec
+        if: failure()
+        uses: azure/cli@v2
+        with:
+          inlineScript: |
+            az containerapp ingress traffic set --name trame2-api --resource-group ${{ vars.RESOURCE_GROUP_PROD }} \
+              --label-weight stable=100 nouvelle=0

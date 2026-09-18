@@ -1,0 +1,74 @@
+@page "/catalogue"
+@inject ICatalogueService CatalogueService
+@inject PanierService Panier
+
+<PageTitle>Catalogue - Textinord</PageTitle>
+
+<h1>Catalogue</h1>
+
+<FiltreCatalogue Familles="familles" OnRechercher="Rechercher" />
+
+@if (message is not null)
+{
+    <div class="alert alert-success py-2" role="status">@message</div>
+}
+
+@if (resultat is null)
+{
+    <p>Chargement du catalogue...</p>
+}
+else if (resultat.Total == 0)
+{
+    <p class="text-muted">Aucun article ne correspond à votre recherche.</p>
+}
+else
+{
+    <p class="text-muted resume-resultats">
+        @resultat.Total article(s), page @resultat.Page sur @resultat.NombrePages
+    </p>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-3 mb-3">
+        @foreach (var article in resultat.Elements)
+        {
+            <div class="col" @key="article.Reference">
+                <ArticleCarte Article="article" OnAjouter="AjouterAuPanier" />
+            </div>
+        }
+    </div>
+
+    <Pagination Page="resultat.Page" NombrePages="resultat.NombrePages" PageChangee="ChangerPage" />
+}
+
+@code {
+    private const int TaillePage = 12;
+
+    private IReadOnlyList<string> familles = [];
+    private FiltreArticles filtreCourant = new();
+    private PageResultat<Article>? resultat;
+    private string? message;
+
+    protected override async Task OnInitializedAsync()
+    {
+        familles = await CatalogueService.ListerFamillesAsync();
+        await ChargerAsync(1);
+    }
+
+    private async Task Rechercher(FiltreArticles filtre)
+    {
+        filtreCourant = filtre;
+        await ChargerAsync(1);
+    }
+
+    private Task ChangerPage(int page) => ChargerAsync(page);
+
+    private async Task ChargerAsync(int page)
+    {
+        resultat = await CatalogueService.RechercherAsync(filtreCourant, page, TaillePage);
+    }
+
+    private void AjouterAuPanier(AjoutPanier ajout)
+    {
+        Panier.Ajouter(ajout.Article, ajout.Quantite);
+        message = $"{ajout.Quantite} x {ajout.Article.Libelle} ajouté(s) au panier ({Panier.NombrePieces} pièce(s) au total).";
+    }
+}

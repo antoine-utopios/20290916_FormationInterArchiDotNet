@@ -1,0 +1,42 @@
+<nav aria-label="Pagination">
+    <ul class="pagination justify-content-center">
+        <li class="page-item @(Page <= 1 ? "disabled" : null)">
+            <button type="button" class="page-link" @onclick="() => Aller(Page - 1)" disabled="@(Page <= 1)">Précédent</button>
+        </li>
+        @foreach (var numero in Fenetre())
+        {
+            var numeroPage = numero;
+            <li class="page-item @(numeroPage == Page ? "active" : null)" @key="numeroPage">
+                <button type="button" class="page-link" @onclick="() => Aller(numeroPage)" aria-current="@(numeroPage == Page ? "page" : null)">@numeroPage</button>
+            </li>
+        }
+        <li class="page-item @(Page >= NombrePages ? "disabled" : null)">
+            <button type="button" class="page-link" @onclick="() => Aller(Page + 1)" disabled="@(Page >= NombrePages)">Suivant</button>
+        </li>
+    </ul>
+</nav>
+
+@code {
+    private const int LargeurFenetre = 5;
+
+    [Parameter, EditorRequired]
+    public int Page { get; set; }
+
+    [Parameter, EditorRequired]
+    public int NombrePages { get; set; }
+
+    [Parameter]
+    public EventCallback<int> PageChangee { get; set; }
+
+    private IEnumerable<int> Fenetre()
+    {
+        var debut = Math.Max(1, Math.Min(Page - LargeurFenetre / 2, NombrePages - LargeurFenetre + 1));
+        var fin = Math.Min(NombrePages, debut + LargeurFenetre - 1);
+        return Enumerable.Range(debut, fin - debut + 1);
+    }
+
+    private Task Aller(int page) =>
+        page < 1 || page > NombrePages || page == Page
+            ? Task.CompletedTask
+            : PageChangee.InvokeAsync(page);
+}

@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <Description>API Trame 2 : point d'entrée HTTP du flux de commande (Channel Adapter côté entrée).</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Textinord.Trame.Application\Textinord.Trame.Application.csproj" />
+    <ProjectReference Include="..\Textinord.Trame.Infrastructure\Textinord.Trame.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+  </ItemGroup>
+
+</Project>
